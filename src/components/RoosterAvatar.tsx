@@ -4,6 +4,7 @@ import type { RoosterSelection } from '../types/avatar';
 interface RoosterAvatarProps {
   selection: RoosterSelection;
   isAnimated: boolean;
+  showBackdrop?: boolean;
 }
 
 const outline = '#4f3922';
@@ -534,8 +535,11 @@ const renderFeet = (variant: RoosterSelection['feet'], fill: string) => {
   }
 };
 
-export function RoosterAvatar({ selection, isAnimated }: RoosterAvatarProps) {
-  const bodyClipId = useId().replace(/:/g, '');
+export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: RoosterAvatarProps) {
+  const svgId = useId().replace(/:/g, '');
+  const bodyClipId = `${svgId}-body-clip`;
+  const skyGradientId = `${svgId}-sky-gradient`;
+  const groundGradientId = `${svgId}-ground-gradient`;
   const headTransform = getHeadTransform(selection.head);
 
   return (
@@ -548,23 +552,27 @@ export function RoosterAvatar({ selection, isAnimated }: RoosterAvatarProps) {
       height="100%"
     >
       <defs>
-        <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <linearGradient id={skyGradientId} x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#cfeeff" />
           <stop offset="100%" stopColor="#fff7dc" />
         </linearGradient>
-        <linearGradient id="groundGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id={groundGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#7eb36f" />
           <stop offset="100%" stopColor="#5b924b" />
         </linearGradient>
         <clipPath id={bodyClipId}>{renderBodyClipShape(selection.body)}</clipPath>
       </defs>
 
-      <rect x="12" y="12" width="296" height="296" rx="36" fill="url(#skyGradient)" />
-      <circle cx="78" cy="66" r="22" fill="#fff1ab" opacity="0.75" />
-      <path d="M18 228c53-18 102-10 150 12 42-17 92-16 134 3v65H18z" fill="url(#groundGradient)" />
-      <rect x="42" y="134" width="56" height="66" rx="6" fill="#d38f4d" />
-      <polygon points="36,138 70,108 104,138" fill="#8b5030" />
-      <path d="M90 171h16M90 183h16" stroke="#f7d7ac" strokeLinecap="round" strokeWidth="5" />
+      {showBackdrop ? (
+        <>
+          <rect x="12" y="12" width="296" height="296" rx="36" fill={`url(#${skyGradientId})`} />
+          <circle cx="78" cy="66" r="22" fill="#fff1ab" opacity="0.75" />
+          <path d="M18 228c53-18 102-10 150 12 42-17 92-16 134 3v65H18z" fill={`url(#${groundGradientId})`} />
+          <rect x="42" y="134" width="56" height="66" rx="6" fill="#d38f4d" />
+          <polygon points="36,138 70,108 104,138" fill="#8b5030" />
+          <path d="M90 171h16M90 183h16" stroke="#f7d7ac" strokeLinecap="round" strokeWidth="5" />
+        </>
+      ) : null}
 
       <g transform="translate(30 2)">
         <ellipse className="rooster-shadow" cx="157" cy="274" rx="58" ry="11" fill="rgba(74, 55, 29, 0.18)" />

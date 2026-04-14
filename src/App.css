@@ -60,6 +60,35 @@
   color: #4e4434;
 }
 
+.view-switch {
+  display: inline-flex;
+  margin-top: 1rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: rgba(246, 231, 192, 0.75);
+  border: 1px solid rgba(126, 89, 37, 0.14);
+}
+
+.view-switch__button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  background: transparent;
+  color: #6a4b1f;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.view-switch__button:hover {
+  transform: translateY(-1px);
+}
+
+.view-switch__button--active {
+  background: #ffffff;
+  color: #3e2e19;
+  box-shadow: 0 8px 18px rgba(130, 95, 46, 0.1);
+}
+
 .hero-badge,
 .panel-pill {
   display: inline-flex;
@@ -79,6 +108,15 @@
 
 .preview-panel {
   padding: 1.25rem;
+}
+
+.stress-panel {
+  padding: 1.25rem;
+  background: rgba(255, 252, 247, 0.82);
+  border: 1px solid rgba(126, 89, 37, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 24px 50px rgba(120, 84, 37, 0.08);
+  backdrop-filter: blur(12px);
 }
 
 .panel-header {
@@ -113,6 +151,61 @@
 .motion-toggle input {
   margin: 0;
   accent-color: #b97925;
+}
+
+.stress-toolbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: 0.85rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.stress-count-control {
+  display: inline-grid;
+  gap: 0.35rem;
+  color: #5d4522;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.stress-count-control input,
+.stress-range,
+.stress-button {
+  accent-color: #b97925;
+}
+
+.stress-count-control input {
+  width: 92px;
+  padding: 0.65rem 0.8rem;
+  border-radius: 14px;
+  border: 1px solid rgba(130, 95, 46, 0.15);
+  background: #ffffff;
+  color: #453420;
+}
+
+.stress-range {
+  width: 100%;
+}
+
+.stress-button {
+  border: 1px solid rgba(130, 95, 46, 0.15);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: #ffffff;
+  color: #4b351a;
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.stress-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(140, 98, 42, 0.08);
+  border-color: rgba(154, 98, 22, 0.35);
+}
+
+.stress-button--secondary {
+  background: #fff7e9;
 }
 
 .panel-header h2 {
@@ -176,6 +269,81 @@
   height: auto;
 }
 
+.stress-stage {
+  position: relative;
+  min-height: 680px;
+  overflow: hidden;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.6), transparent 30%),
+    linear-gradient(180deg, #bfe7ff 0%, #dff3ff 32%, #c8e29c 33%, #8fc268 63%, #66964d 100%);
+  border: 1px solid rgba(95, 123, 66, 0.18);
+}
+
+.stress-sun,
+.stress-hills,
+.stress-ground {
+  position: absolute;
+  pointer-events: none;
+}
+
+.stress-sun {
+  top: 3.5rem;
+  right: 4rem;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 241, 171, 0.95), rgba(255, 241, 171, 0.2) 70%, transparent 72%);
+}
+
+.stress-hills--back {
+  inset: auto 0 280px;
+  height: 220px;
+  background:
+    radial-gradient(circle at 12% 100%, #8db36b 0 25%, transparent 26%),
+    radial-gradient(circle at 40% 100%, #83ac62 0 28%, transparent 29%),
+    radial-gradient(circle at 73% 100%, #7ca55d 0 26%, transparent 27%);
+}
+
+.stress-hills--mid {
+  inset: auto 0 190px;
+  height: 220px;
+  background:
+    radial-gradient(circle at 18% 100%, #73a256 0 28%, transparent 29%),
+    radial-gradient(circle at 51% 100%, #6b9950 0 30%, transparent 31%),
+    radial-gradient(circle at 84% 100%, #648f4a 0 28%, transparent 29%);
+}
+
+.stress-ground--back {
+  left: -5%;
+  right: -5%;
+  bottom: 100px;
+  height: 170px;
+  border-radius: 50%;
+  background: rgba(103, 149, 67, 0.24);
+}
+
+.stress-ground--front {
+  left: -8%;
+  right: -8%;
+  bottom: -70px;
+  height: 260px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(113, 156, 71, 0.22), rgba(86, 126, 52, 0.5));
+}
+
+.stress-rooster {
+  position: absolute;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+}
+
+.stress-rooster svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
 .rooster-avatar {
   overflow: visible;
 }
@@ -205,37 +373,44 @@
 }
 
 .rooster-travel {
-  animation: rooster-travel 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: rooster-travel var(--rooster-travel-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95)
+    var(--rooster-animation-delay, 0s) infinite;
 }
 
 .rooster-direction {
   transform-origin: center;
-  animation: rooster-direction 8s steps(1, end) infinite;
+  animation: rooster-direction var(--rooster-travel-duration, 8s) steps(1, end)
+    var(--rooster-animation-delay, 0s) infinite;
 }
 
 .rooster-bob {
   transform-origin: center;
-  animation: rooster-bob 1.05s ease-in-out infinite;
+  animation: rooster-bob var(--rooster-cycle-duration, 1.05s) ease-in-out var(--rooster-animation-delay, 0s)
+    infinite;
 }
 
 .rooster-shadow {
   transform-origin: center;
-  animation: rooster-shadow 1.05s ease-in-out infinite;
+  animation: rooster-shadow var(--rooster-cycle-duration, 1.05s) ease-in-out var(--rooster-animation-delay, 0s)
+    infinite;
 }
 
 .rooster-tail {
   transform-origin: right center;
-  animation: rooster-tail 1.05s ease-in-out infinite;
+  animation: rooster-tail var(--rooster-cycle-duration, 1.05s) ease-in-out var(--rooster-animation-delay, 0s)
+    infinite;
 }
 
 .rooster-wing {
   transform-origin: right top;
-  animation: rooster-wing 1.05s ease-in-out infinite;
+  animation: rooster-wing var(--rooster-cycle-duration, 1.05s) ease-in-out var(--rooster-animation-delay, 0s)
+    infinite;
 }
 
 .rooster-head {
   transform-origin: left bottom;
-  animation: rooster-head 1.05s ease-in-out infinite;
+  animation: rooster-head var(--rooster-cycle-duration, 1.05s) ease-in-out var(--rooster-animation-delay, 0s)
+    infinite;
 }
 
 .rooster-leg {
@@ -243,11 +418,13 @@
 }
 
 .rooster-leg--front {
-  animation: rooster-leg-front 1.05s ease-in-out infinite;
+  animation: rooster-leg-front var(--rooster-cycle-duration, 1.05s) ease-in-out
+    var(--rooster-animation-delay, 0s) infinite;
 }
 
 .rooster-leg--rear {
-  animation: rooster-leg-rear 1.05s ease-in-out infinite;
+  animation: rooster-leg-rear var(--rooster-cycle-duration, 1.05s) ease-in-out
+    var(--rooster-animation-delay, 0s) infinite;
 }
 
 @keyframes rooster-travel {
@@ -399,7 +576,15 @@
     justify-content: start;
   }
 
+  .stress-toolbar {
+    grid-template-columns: 1fr;
+  }
+
   .preview-stage {
     min-height: 380px;
+  }
+
+  .stress-stage {
+    min-height: 560px;
   }
 }

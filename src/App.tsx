@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { ControlPanel } from './components/ControlPanel';
 import { RoosterAvatar } from './components/RoosterAvatar';
+import { RoosterStressTest } from './components/RoosterStressTest';
 import {
   colorSections,
   defaultRoosterSelection,
@@ -116,9 +117,12 @@ const loadStoredSelection = (): RoosterSelection => {
   };
 };
 
+type ViewMode = 'builder' | 'stress';
+
 function App() {
   const [selection, setSelection] = useState<RoosterSelection>(loadStoredSelection);
   const [isAnimationEnabled, setIsAnimationEnabled] = useState(true);
+  const [viewMode, setViewMode] = useState<ViewMode>('builder');
 
   useEffect(() => {
     try {
@@ -204,64 +208,89 @@ function App() {
       <header className="hero">
         <div>
           <p className="eyebrow">Farm Avatar Generator MVP</p>
-          <h1>Build a demo-ready rooster in minutes.</h1>
+          <h1>{viewMode === 'builder' ? 'Build a demo-ready rooster in minutes.' : 'Stress test a whole flock on screen.'}</h1>
           <p className="hero-copy">
-            Start with a rooster, mix tail shapes, combs, and chest fluff, and tweak colours live. The
-            setup stays lightweight so you can test reactions and expand into more farm animals later.
+            {viewMode === 'builder'
+              ? 'Start with a rooster, mix tail shapes, combs, and chest fluff, and tweak colours live. The setup stays lightweight so you can test reactions and expand into more farm animals later.'
+              : 'Fill a farm with randomized roosters, vary the flock count, and watch the frame rate while foreground and background birds stack across the scene.'}
           </p>
         </div>
         <div className="hero-card">
           <span className="hero-badge">MVP focus</span>
-          <p>One live preview, nine customizable parts, and colour palettes that keep the demo playful.</p>
+          <p>
+            {viewMode === 'builder'
+              ? 'One live preview, nine customizable parts, and colour palettes that keep the demo playful.'
+              : 'One stress scene, randomized roosters, and an FPS counter for quick render pressure checks.'}
+          </p>
+          <div className="view-switch" role="tablist" aria-label="View mode">
+            <button
+              className={`view-switch__button${viewMode === 'builder' ? ' view-switch__button--active' : ''}`}
+              type="button"
+              onClick={() => setViewMode('builder')}
+            >
+              Builder
+            </button>
+            <button
+              className={`view-switch__button${viewMode === 'stress' ? ' view-switch__button--active' : ''}`}
+              type="button"
+              onClick={() => setViewMode('stress')}
+            >
+              Stress test
+            </button>
+          </div>
         </div>
       </header>
 
       <main className="workspace">
-        <section className="preview-panel">
-          <div className="panel-header">
-            <div>
-              <h2>Rooster preview</h2>
-              <p>Adjust tail shape and feather texture while the preview idles through a light walk loop.</p>
+        {viewMode === 'builder' ? (
+          <section className="preview-panel">
+            <div className="panel-header">
+              <div>
+                <h2>Rooster preview</h2>
+                <p>Adjust tail shape and feather texture while the preview idles through a light walk loop.</p>
+              </div>
+              <div className="preview-tools">
+                <label className="motion-toggle">
+                  <input
+                    type="checkbox"
+                    checked={isAnimationEnabled}
+                    onChange={(event) => setIsAnimationEnabled(event.target.checked)}
+                  />
+                  <span>Animation</span>
+                </label>
+                <span className="panel-pill">{isAnimationEnabled ? 'Idle loop' : 'Animation off'}</span>
+              </div>
             </div>
-            <div className="preview-tools">
-              <label className="motion-toggle">
-                <input
-                  type="checkbox"
-                  checked={isAnimationEnabled}
-                  onChange={(event) => setIsAnimationEnabled(event.target.checked)}
-                />
-                <span>Animation</span>
-              </label>
-              <span className="panel-pill">{isAnimationEnabled ? 'Idle loop' : 'Animation off'}</span>
+
+            <div className="preview-stage">
+              <RoosterAvatar selection={selection} isAnimated={isAnimationEnabled} />
             </div>
-          </div>
 
-          <div className="preview-stage">
-            <RoosterAvatar selection={selection} isAnimated={isAnimationEnabled} />
-          </div>
-
-          <div className="selection-summary">
-            <ControlPanel
-              partSections={roosterPartSections}
-              colorSections={colorSections}
-              selection={selection}
-              onBodyChange={updateBody}
-              onTailChange={updateTail}
-              onWingChange={updateWings}
-              onFeatherPatternChange={updateFeatherPattern}
-              onCombShapeChange={updateCombShape}
-              onHeadChange={updateHead}
-              onChestFluffChange={updateChestFluff}
-              onFeetChange={updateFeet}
-              onHeadwearChange={updateHeadwear}
-              onBodyColorChange={updateBodyColor}
-              onWingColorChange={updateWingColor}
-              onCombColorChange={updateCombColor}
-              onBeakColorChange={updateBeakColor}
-              onHeadwearColorChange={updateHeadwearColor}
-            />
-          </div>
-        </section>
+            <div className="selection-summary">
+              <ControlPanel
+                partSections={roosterPartSections}
+                colorSections={colorSections}
+                selection={selection}
+                onBodyChange={updateBody}
+                onTailChange={updateTail}
+                onWingChange={updateWings}
+                onFeatherPatternChange={updateFeatherPattern}
+                onCombShapeChange={updateCombShape}
+                onHeadChange={updateHead}
+                onChestFluffChange={updateChestFluff}
+                onFeetChange={updateFeet}
+                onHeadwearChange={updateHeadwear}
+                onBodyColorChange={updateBodyColor}
+                onWingColorChange={updateWingColor}
+                onCombColorChange={updateCombColor}
+                onBeakColorChange={updateBeakColor}
+                onHeadwearColorChange={updateHeadwearColor}
+              />
+            </div>
+          </section>
+        ) : (
+          <RoosterStressTest />
+        )}
       </main>
     </div>
   );
