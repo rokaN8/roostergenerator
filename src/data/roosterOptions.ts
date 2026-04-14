@@ -114,7 +114,7 @@ export const roosterPartSections: [
     description: 'Top things off with a little farm-ready personality.',
     options: [
       { id: 'none', label: 'None', description: 'Keep the comb fully visible.' },
-      { id: 'baseball-cap', label: 'Baseball cap', description: 'A playful cap with a curved bill.' },
+      { id: 'dunce-cap', label: 'Dunce cap', description: 'A tall pointed cap for extra silly energy.' },
       { id: 'farmer-hat', label: 'Farmer hat', description: 'A broad-brimmed work hat for the coop.' },
       { id: 'straw-hat', label: 'Straw hat', description: 'A lighter woven hat for sunny barnyard days.' },
     ],
@@ -131,6 +131,10 @@ export const colorSections: ColorSection[] = [
       { label: 'Barn Red', value: '#bb5030' },
       { label: 'Cream', value: '#f0d7a7' },
       { label: 'Midnight', value: '#4b4c65' },
+      { label: 'Harvest Brown', value: '#9f5c32' },
+      { label: 'Dusty Plum', value: '#7b5a72' },
+      { label: 'Moss Green', value: '#6a7844' },
+      { label: 'Coop Charcoal', value: '#554741' },
     ],
   },
   {
@@ -142,6 +146,10 @@ export const colorSections: ColorSection[] = [
       { label: 'Golden Wheat', value: '#d1a64b' },
       { label: 'Pine', value: '#537256' },
       { label: 'Slate', value: '#6b6d86' },
+      { label: 'Walnut', value: '#744429' },
+      { label: 'Hayfield Tan', value: '#c59a5a' },
+      { label: 'Sage', value: '#75896a' },
+      { label: 'Storm Blue', value: '#5d6d85' },
     ],
   },
   {
@@ -153,6 +161,10 @@ export const colorSections: ColorSection[] = [
       { label: 'Rose', value: '#da6076' },
       { label: 'Plum', value: '#9c4561' },
       { label: 'Coral', value: '#e6805a' },
+      { label: 'Crimson', value: '#b82d34' },
+      { label: 'Berry', value: '#b54d67' },
+      { label: 'Mulberry', value: '#804056' },
+      { label: 'Terracotta', value: '#d16a4f' },
     ],
   },
   {
@@ -164,6 +176,10 @@ export const colorSections: ColorSection[] = [
       { label: 'Honey', value: '#d88524' },
       { label: 'Sand', value: '#c89b5a' },
       { label: 'Copper', value: '#b96b34' },
+      { label: 'Marigold', value: '#efb448' },
+      { label: 'Ochre', value: '#ca8d2f' },
+      { label: 'Toasted Wheat', value: '#b9945a' },
+      { label: 'Rust', value: '#a76033' },
     ],
   },
   {
@@ -175,6 +191,10 @@ export const colorSections: ColorSection[] = [
       { label: 'Tractor Red', value: '#b94f3b' },
       { label: 'Olive', value: '#7a8b4c' },
       { label: 'Straw Gold', value: '#d4b05b' },
+      { label: 'Denim', value: '#40608e' },
+      { label: 'Sunflower', value: '#c79941' },
+      { label: 'Barn Moss', value: '#667947' },
+      { label: 'Dusty Mauve', value: '#8f667d' },
     ],
   },
 ];

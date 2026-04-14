@@ -39,24 +39,28 @@ const renderHeadwear = (
   fill: string,
 ) => {
   switch (variant) {
-    case 'baseball-cap':
+    case 'dunce-cap':
       return (
-        <g>
-          <path
-            d="M185 87c7-13 22-21 39-21 20 0 36 11 43 29-18 5-52 5-82-8z"
-            fill={fill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-          <path
-            d="M230 91c10-2 20-1 30 4-8 7-18 10-30 11"
-            fill={fill}
-            stroke={outline}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
+        <g transform="translate(2 -32)">
+          <g transform="translate(442 0) scale(-1 1)">
+            <path
+              d="M206 120c-2-28 6-50 20-70 18 16 29 38 31 68-12 6-34 7-51 2z"
+              fill={fill}
+              stroke={outline}
+              strokeLinejoin="round"
+              strokeWidth="5"
+            />
+            <path d="M225 58c3-1 6 1 7 5-2 3-5 5-8 5-3-1-4-4-3-7 1-1 2-2 4-3z" fill="#f8f2df" stroke={outline} strokeWidth="4" />
+            <path
+              d="M198 117c16-6 36-6 59-1-8 9-21 14-36 15-11 0-20-5-23-14z"
+              fill="#f4e7be"
+              stroke={outline}
+              strokeLinejoin="round"
+              strokeWidth="5"
+            />
+            <path d="M221 70c6 13 10 27 12 42" fill="none" stroke="rgba(255,255,255,0.24)" strokeLinecap="round" strokeWidth="4" />
+            <path d="M211 110c5 3 11 4 18 5" fill="none" stroke="rgba(79,57,34,0.22)" strokeLinecap="round" strokeWidth="3.5" />
+          </g>
         </g>
       );
     case 'farmer-hat':

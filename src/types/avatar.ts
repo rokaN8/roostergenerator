@@ -6,7 +6,7 @@ export type CombShapeVariantId = 'classic' | 'rose' | 'pea' | 'show';
 export type HeadVariantId = 'alert' | 'proud' | 'cheery';
 export type ChestFluffVariantId = 'sleek' | 'ruff' | 'puffed' | 'layered';
 export type FeetVariantId = 'sturdy' | 'scratch' | 'strut';
-export type HeadwearVariantId = 'none' | 'baseball-cap' | 'farmer-hat' | 'straw-hat';
+export type HeadwearVariantId = 'none' | 'dunce-cap' | 'farmer-hat' | 'straw-hat';
 
 export interface PartOption<T extends string> {
   id: T;

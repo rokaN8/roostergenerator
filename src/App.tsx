@@ -38,6 +38,17 @@ const createDefaultSelection = (): RoosterSelection => ({
 const isAllowedValue = (value: unknown, options: string[]): value is string =>
   typeof value === 'string' && options.includes(value);
 
+const isAllowedHeadwear = (value: unknown): value is RoosterSelection['headwear'] =>
+  isAllowedValue(value, partOptionsById.headwear);
+
+const migrateHeadwearValue = (value: unknown) => {
+  if (value === 'baseball-cap') {
+    return 'dunce-cap';
+  }
+
+  return value;
+};
+
 const loadStoredSelection = (): RoosterSelection => {
   const fallback = createDefaultSelection();
 
@@ -67,6 +78,7 @@ const loadStoredSelection = (): RoosterSelection => {
   const storedSelection = parsedValue as Partial<RoosterSelection> & {
     colors?: Partial<RoosterSelection['colors']>;
   };
+  const storedHeadwear = migrateHeadwearValue(storedSelection.headwear);
 
   return {
     body: isAllowedValue(storedSelection.body, partOptionsById.body) ? storedSelection.body : fallback.body,
@@ -83,9 +95,7 @@ const loadStoredSelection = (): RoosterSelection => {
       ? storedSelection.chestFluff
       : fallback.chestFluff,
     feet: isAllowedValue(storedSelection.feet, partOptionsById.feet) ? storedSelection.feet : fallback.feet,
-    headwear: isAllowedValue(storedSelection.headwear, partOptionsById.headwear)
-      ? storedSelection.headwear
-      : fallback.headwear,
+    headwear: isAllowedHeadwear(storedHeadwear) ? storedHeadwear : fallback.headwear,
     colors: {
       body: isAllowedValue(storedSelection.colors?.body, colorOptionsById.body)
         ? storedSelection.colors.body
