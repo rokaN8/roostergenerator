@@ -3,6 +3,7 @@ import type { RoosterSelection } from '../types/avatar';
 
 interface RoosterAvatarProps {
   selection: RoosterSelection;
+  isAnimated: boolean;
 }
 
 const outline = '#4f3922';
@@ -391,13 +392,13 @@ const renderFeet = (variant: RoosterSelection['feet'], fill: string) => {
   }
 };
 
-export function RoosterAvatar({ selection }: RoosterAvatarProps) {
+export function RoosterAvatar({ selection, isAnimated }: RoosterAvatarProps) {
   const bodyClipId = useId().replace(/:/g, '');
   const headTransform = getHeadTransform(selection.head);
 
   return (
     <svg
-      className="rooster-avatar"
+      className={`rooster-avatar${isAnimated ? '' : ' rooster-avatar--static'}`}
       viewBox="0 0 320 320"
       role="img"
       aria-label="Custom rooster avatar preview"

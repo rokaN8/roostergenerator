@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { ControlPanel } from './components/ControlPanel';
 import { RoosterAvatar } from './components/RoosterAvatar';
@@ -18,11 +18,97 @@ import type {
   WingVariantId,
 } from './types/avatar';
 
+const selectionStorageKey = 'rooster-generator.selection';
+
+const partOptionsById = Object.fromEntries(
+  roosterPartSections.map((section) => [section.id, section.options.map((option) => option.id)]),
+) as Record<(typeof roosterPartSections)[number]['id'], string[]>;
+
+const colorOptionsById = Object.fromEntries(
+  colorSections.map((section) => [section.id, section.options.map((option) => option.value)]),
+) as Record<(typeof colorSections)[number]['id'], string[]>;
+
+const createDefaultSelection = (): RoosterSelection => ({
+  ...defaultRoosterSelection,
+  colors: { ...defaultRoosterSelection.colors },
+});
+
+const isAllowedValue = (value: unknown, options: string[]): value is string =>
+  typeof value === 'string' && options.includes(value);
+
+const loadStoredSelection = (): RoosterSelection => {
+  const fallback = createDefaultSelection();
+
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+
+  const storedValue = window.localStorage.getItem(selectionStorageKey);
+
+  if (!storedValue) {
+    return fallback;
+  }
+
+  let parsedValue: unknown;
+
+  try {
+    parsedValue = JSON.parse(storedValue);
+  } catch (error) {
+    console.error('Failed to parse saved rooster selection.', error);
+    return fallback;
+  }
+
+  if (!parsedValue || typeof parsedValue !== 'object') {
+    return fallback;
+  }
+
+  const storedSelection = parsedValue as Partial<RoosterSelection> & {
+    colors?: Partial<RoosterSelection['colors']>;
+  };
+
+  return {
+    body: isAllowedValue(storedSelection.body, partOptionsById.body) ? storedSelection.body : fallback.body,
+    tail: isAllowedValue(storedSelection.tail, partOptionsById.tail) ? storedSelection.tail : fallback.tail,
+    wings: isAllowedValue(storedSelection.wings, partOptionsById.wings) ? storedSelection.wings : fallback.wings,
+    featherPattern: isAllowedValue(storedSelection.featherPattern, partOptionsById.featherPattern)
+      ? storedSelection.featherPattern
+      : fallback.featherPattern,
+    head: isAllowedValue(storedSelection.head, partOptionsById.head) ? storedSelection.head : fallback.head,
+    feet: isAllowedValue(storedSelection.feet, partOptionsById.feet) ? storedSelection.feet : fallback.feet,
+    headwear: isAllowedValue(storedSelection.headwear, partOptionsById.headwear)
+      ? storedSelection.headwear
+      : fallback.headwear,
+    colors: {
+      body: isAllowedValue(storedSelection.colors?.body, colorOptionsById.body)
+        ? storedSelection.colors.body
+        : fallback.colors.body,
+      wings: isAllowedValue(storedSelection.colors?.wings, colorOptionsById.wings)
+        ? storedSelection.colors.wings
+        : fallback.colors.wings,
+      comb: isAllowedValue(storedSelection.colors?.comb, colorOptionsById.comb)
+        ? storedSelection.colors.comb
+        : fallback.colors.comb,
+      beak: isAllowedValue(storedSelection.colors?.beak, colorOptionsById.beak)
+        ? storedSelection.colors.beak
+        : fallback.colors.beak,
+      headwear: isAllowedValue(storedSelection.colors?.headwear, colorOptionsById.headwear)
+        ? storedSelection.colors.headwear
+        : fallback.colors.headwear,
+    },
+  };
+};
+
 function App() {
-  const [selection, setSelection] = useState<RoosterSelection>(() => ({
-    ...defaultRoosterSelection,
-    colors: { ...defaultRoosterSelection.colors },
-  }));
+  const [selection, setSelection] = useState<RoosterSelection>(loadStoredSelection);
+  const [isAnimationEnabled, setIsAnimationEnabled] = useState(true);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(selectionStorageKey, JSON.stringify(selection));
+    } catch (error) {
+      console.error('Failed to save rooster selection.', error);
+    }
+  }, [selection]);
 
   const updateBody = (value: BodyVariantId) => {
     setSelection((current) => ({ ...current, body: value }));
@@ -111,11 +197,21 @@ function App() {
               <h2>Rooster preview</h2>
               <p>Adjust tail shape and feather texture while the preview idles through a light walk loop.</p>
             </div>
-            <span className="panel-pill">Idle loop</span>
+            <div className="preview-tools">
+              <label className="motion-toggle">
+                <input
+                  type="checkbox"
+                  checked={isAnimationEnabled}
+                  onChange={(event) => setIsAnimationEnabled(event.target.checked)}
+                />
+                <span>Animation</span>
+              </label>
+              <span className="panel-pill">{isAnimationEnabled ? 'Idle loop' : 'Animation off'}</span>
+            </div>
           </div>
 
           <div className="preview-stage">
-            <RoosterAvatar selection={selection} />
+            <RoosterAvatar selection={selection} isAnimated={isAnimationEnabled} />
           </div>
 
           <div className="selection-summary">
