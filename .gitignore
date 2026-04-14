@@ -1,0 +1,25 @@
+node_modules/
+dist/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Generated config outputs
+vite.config.js
+vite.config.d.ts
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment overrides
+.env.local
+.env.*.local
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
