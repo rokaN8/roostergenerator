@@ -61,7 +61,7 @@ const renderHeadwear = (
       );
     case 'farmer-hat':
       return (
-        <g>
+        <g transform="translate(442 0) scale(-1 1)">
           <ellipse cx="221" cy="90" rx="48" ry="11" fill="#f2e4b4" stroke={outline} strokeWidth="5" />
           <path
             d="M191 89c2-20 17-34 35-34 16 0 30 11 35 34-13 5-25 8-36 8-13 0-25-3-34-8z"
@@ -75,7 +75,7 @@ const renderHeadwear = (
       );
     case 'straw-hat':
       return (
-        <g>
+        <g transform="translate(442 0) scale(-1 1)">
           <ellipse cx="221" cy="91" rx="46" ry="10" fill="#e8c96c" stroke={outline} strokeWidth="5" />
           <path
             d="M194 90c3-17 17-28 33-28 15 0 27 9 33 28-11 4-23 6-33 6-12 0-24-2-33-6z"
@@ -290,15 +290,155 @@ const renderFeatherPattern = (
   }
 };
 
-const renderHead = (variant: RoosterSelection['head'], comb: string, beak: string) => {
+const renderComb = (variant: RoosterSelection['combShape'], fill: string, cx: number, cy: number) => {
+  switch (variant) {
+    case 'rose':
+      return (
+        <>
+          <ellipse cx={cx - 8} cy={cy - 24} rx="21" ry="10" fill={fill} stroke={outline} strokeWidth="5" />
+          <path
+            d={`M${cx - 22} ${cy + 19}c11-7 24-8 34 0-4 11-14 18-26 18-8-4-11-11-8-18z`}
+            fill={fill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+        </>
+      );
+    case 'pea':
+      return (
+        <>
+          <circle cx={cx - 22} cy={cy - 24} r="7" fill={fill} stroke={outline} strokeWidth="4.5" />
+          <circle cx={cx - 10} cy={cy - 27} r="8" fill={fill} stroke={outline} strokeWidth="4.5" />
+          <circle cx={cx + 3} cy={cy - 24} r="7" fill={fill} stroke={outline} strokeWidth="4.5" />
+          <path
+            d={`M${cx - 18} ${cy + 18}c7-5 17-6 24 0-2 9-9 15-18 16-6-4-8-9-6-16z`}
+            fill={fill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+        </>
+      );
+    case 'show':
+      return (
+        <>
+          <path
+            d={`M${cx - 32} ${cy - 10}c5-22 18-33 31-33 8 0 14 3 18 8-4 12-4 24 2 36-10 0-17-3-24-9-7 5-16 8-27 8z`}
+            fill={fill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+          <path
+            d={`M${cx - 21} ${cy + 18}c13-7 27-6 37 3-4 15-14 23-28 24-11-6-15-17-9-27z`}
+            fill={fill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+        </>
+      );
+    case 'classic':
+    default:
+      return (
+        <>
+          <path
+            d={`M${cx - 31} ${cy - 19}c3-15 16-24 29-24 7 0 13 2 16 5-5 11-5 23 4 34-11 0-21-3-28-10-7 5-14 7-21 8z`}
+            fill={fill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+          <path
+            d={`M${cx - 27} ${cy + 24}c11-2 22-1 29 6-2 9-9 17-21 19-9-6-12-16-8-25z`}
+            fill={fill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+        </>
+      );
+  }
+};
+
+const renderChestFluff = (
+  variant: RoosterSelection['chestFluff'],
+  bodyFill: string,
+  accentFill: string,
+) => {
+  switch (variant) {
+    case 'ruff':
+      return (
+        <g>
+          <path
+            d="M188 132c12 4 22 13 28 25-6 12-17 21-31 27-16-3-28-13-35-28 6-10 18-20 38-24z"
+            fill={bodyFill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+          <path d="M182 154c11 3 20 10 28 21" fill="none" stroke="rgba(255,255,255,0.2)" strokeLinecap="round" strokeWidth="7" />
+        </g>
+      );
+    case 'puffed':
+      return (
+        <g>
+          <path
+            d="M184 136c17 4 33 15 39 33-3 17-17 31-38 38-20-3-35-18-37-38 4-15 15-28 36-33z"
+            fill={bodyFill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+          <ellipse cx="184" cy="174" rx="22" ry="18" fill="rgba(255,255,255,0.14)" />
+        </g>
+      );
+    case 'layered':
+      return (
+        <g>
+          <path
+            d="M186 136c15 5 28 15 33 29-5 17-18 29-36 34-20-5-30-18-33-33 4-13 17-25 36-30z"
+            fill={bodyFill}
+            stroke={outline}
+            strokeLinejoin="round"
+            strokeWidth="5"
+          />
+          <path
+            d="M176 152c9 2 18 9 25 18-5 7-12 11-22 13-8-3-14-8-18-15 4-8 8-13 15-16z"
+            fill={accentFill}
+            opacity="0.4"
+          />
+          <path d="M171 163c9 2 16 8 20 15" fill="none" stroke="rgba(255,255,255,0.18)" strokeLinecap="round" strokeWidth="6" />
+        </g>
+      );
+    case 'sleek':
+    default:
+      return (
+        <path
+          d="M188 141c11 5 18 14 20 24-5 10-13 17-25 21-12-3-19-12-22-22 4-11 12-18 27-23z"
+          fill={bodyFill}
+          stroke={outline}
+          strokeLinejoin="round"
+          strokeWidth="5"
+        />
+      );
+  }
+};
+
+const renderHead = (
+  variant: RoosterSelection['head'],
+  combShape: RoosterSelection['combShape'],
+  comb: string,
+  beak: string,
+) => {
   switch (variant) {
     case 'proud':
       return (
         <g>
           <circle cx="218" cy="104" r="34" fill="#f4eddc" stroke={outline} strokeWidth="6" />
-          <path d="M194 82c4-18 18-26 30-26 6 0 10 1 14 4-4 14-2 25 5 38-10-1-18-5-24-10-8 6-15 7-25 7z" fill={comb} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
+          {renderComb(combShape, comb, 218, 104)}
           <path d="M244 107l28 9-28 12c-8-3-10-17 0-21z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
-          <path d="M199 127c12-4 24-4 32 4-2 10-10 18-22 20-10-7-14-17-10-24z" fill={comb} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <circle cx="224" cy="103" r="4.7" fill={eyeColor} />
         </g>
       );
@@ -306,10 +446,9 @@ const renderHead = (variant: RoosterSelection['head'], comb: string, beak: strin
       return (
         <g>
           <circle cx="214" cy="110" r="32" fill="#f4eddc" stroke={outline} strokeWidth="6" />
-          <path d="M191 92c4-15 16-24 28-24 8 0 14 2 18 6-6 10-5 22 3 33-12 1-22-2-30-8-7 5-13 7-19 6z" fill={comb} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
+          {renderComb(combShape, comb, 214, 110)}
           <path d="M239 114l25 8-25 11c-8-4-9-15 0-19z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <path d="M198 131c9 2 18 3 26 0" fill="none" stroke={outline} strokeLinecap="round" strokeWidth="4" />
-          <path d="M196 128c9 0 18 4 21 16-10 8-23 7-31-3-1-6 3-11 10-13z" fill={comb} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <circle cx="221" cy="108" r="4.7" fill={eyeColor} />
         </g>
       );
@@ -318,9 +457,8 @@ const renderHead = (variant: RoosterSelection['head'], comb: string, beak: strin
       return (
         <g>
           <circle cx="214" cy="110" r="32" fill="#f4eddc" stroke={outline} strokeWidth="6" />
-          <path d="M191 89c3-15 16-24 29-24 7 0 13 2 16 5-5 11-5 23 4 34-11 0-21-3-28-10-7 5-14 7-21 8z" fill={comb} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
+          {renderComb(combShape, comb, 214, 110)}
           <path d="M239 113l26 8-26 11c-7-4-9-16 0-19z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
-          <path d="M195 132c11-2 22-1 29 6-2 9-9 17-21 19-9-6-12-16-8-25z" fill={comb} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <circle cx="221" cy="108" r="4.7" fill={eyeColor} />
         </g>
       );
@@ -432,11 +570,12 @@ export function RoosterAvatar({ selection, isAnimated }: RoosterAvatarProps) {
               <g className="rooster-tail">{renderTail(selection.tail, selection.colors.wings)}</g>
               {renderFeet(selection.feet, selection.colors.beak)}
               {renderBody(selection.body, selection.colors.body)}
+              {renderChestFluff(selection.chestFluff, selection.colors.body, selection.colors.wings)}
               {renderFeatherPattern(selection.featherPattern, bodyClipId, selection.colors.wings)}
               <g className="rooster-wing">{renderWing(selection.wings, selection.colors.wings)}</g>
               <g transform={headTransform}>
                 <g className="rooster-head">
-                  {renderHead(selection.head, selection.colors.comb, selection.colors.beak)}
+                  {renderHead(selection.head, selection.combShape, selection.colors.comb, selection.colors.beak)}
                   {renderHeadwear(selection.headwear, selection.colors.headwear)}
                 </g>
               </g>

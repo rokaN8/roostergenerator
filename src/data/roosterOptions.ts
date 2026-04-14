@@ -1,6 +1,8 @@
 import type {
   BodyVariantId,
+  ChestFluffVariantId,
   ColorSection,
+  CombShapeVariantId,
   FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
@@ -16,7 +18,9 @@ export const roosterPartSections: [
   PartSection<'tail', TailVariantId>,
   PartSection<'wings', WingVariantId>,
   PartSection<'featherPattern', FeatherPatternVariantId>,
+  PartSection<'combShape', CombShapeVariantId>,
   PartSection<'head', HeadVariantId>,
+  PartSection<'chestFluff', ChestFluffVariantId>,
   PartSection<'feet', FeetVariantId>,
   PartSection<'headwear', HeadwearVariantId>,
 ] = [
@@ -63,6 +67,17 @@ export const roosterPartSections: [
     ],
   },
   {
+    id: 'combShape',
+    title: 'Comb shape',
+    description: 'Change the rooster comb silhouette.',
+    options: [
+      { id: 'classic', label: 'Classic', description: 'Traditional upright barnyard comb.' },
+      { id: 'rose', label: 'Rose', description: 'Rounder comb that sits closer to the head.' },
+      { id: 'pea', label: 'Pea', description: 'Compact three-bump comb with softer shape.' },
+      { id: 'show', label: 'Show', description: 'Tall dramatic comb for extra swagger.' },
+    ],
+  },
+  {
     id: 'head',
     title: 'Head',
     description: 'Pick the rooster expression and head posture.',
@@ -70,6 +85,17 @@ export const roosterPartSections: [
       { id: 'alert', label: 'Alert', description: 'Upright and attentive.' },
       { id: 'proud', label: 'Proud', description: 'Lifted chin with a showy comb.' },
       { id: 'cheery', label: 'Cheery', description: 'Softer posture with a friendly tilt.' },
+    ],
+  },
+  {
+    id: 'chestFluff',
+    title: 'Chest fluff',
+    description: 'Add neck and chest feather volume.',
+    options: [
+      { id: 'sleek', label: 'Sleek', description: 'Smooth neck feathers with a tidy chest.' },
+      { id: 'ruff', label: 'Ruff', description: 'Extra neck fluff for a showier collar.' },
+      { id: 'puffed', label: 'Puffed', description: 'Rounded chest feathers with more volume.' },
+      { id: 'layered', label: 'Layered', description: 'Defined feather plates through the neck and chest.' },
     ],
   },
   {
@@ -158,7 +184,9 @@ export const defaultRoosterSelection: RoosterSelection = {
   tail: 'classic',
   wings: 'tucked',
   featherPattern: 'clean',
+  combShape: 'classic',
   head: 'alert',
+  chestFluff: 'sleek',
   feet: 'sturdy',
   headwear: 'none',
   colors: {

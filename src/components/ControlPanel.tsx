@@ -1,6 +1,8 @@
 import type {
   BodyVariantId,
+  ChestFluffVariantId,
   ColorSection,
+  CombShapeVariantId,
   FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
@@ -20,7 +22,9 @@ interface ControlPanelProps {
   onTailChange: (value: TailVariantId) => void;
   onWingChange: (value: WingVariantId) => void;
   onFeatherPatternChange: (value: FeatherPatternVariantId) => void;
+  onCombShapeChange: (value: CombShapeVariantId) => void;
   onHeadChange: (value: HeadVariantId) => void;
+  onChestFluffChange: (value: ChestFluffVariantId) => void;
   onFeetChange: (value: FeetVariantId) => void;
   onHeadwearChange: (value: HeadwearVariantId) => void;
   onBodyColorChange: (value: string) => void;
@@ -38,7 +42,9 @@ export function ControlPanel({
   onTailChange,
   onWingChange,
   onFeatherPatternChange,
+  onCombShapeChange,
   onHeadChange,
+  onChestFluffChange,
   onFeetChange,
   onHeadwearChange,
   onBodyColorChange,
@@ -61,8 +67,14 @@ export function ControlPanel({
       case 'featherPattern':
         onFeatherPatternChange(optionId as FeatherPatternVariantId);
         return;
+      case 'combShape':
+        onCombShapeChange(optionId as CombShapeVariantId);
+        return;
       case 'head':
         onHeadChange(optionId as HeadVariantId);
+        return;
+      case 'chestFluff':
+        onChestFluffChange(optionId as ChestFluffVariantId);
         return;
       case 'feet':
         onFeetChange(optionId as FeetVariantId);
@@ -103,8 +115,12 @@ export function ControlPanel({
         return selection.wings;
       case 'featherPattern':
         return selection.featherPattern;
+      case 'combShape':
+        return selection.combShape;
       case 'head':
         return selection.head;
+      case 'chestFluff':
+        return selection.chestFluff;
       case 'feet':
         return selection.feet;
       case 'headwear':

@@ -9,6 +9,8 @@ import {
 } from './data/roosterOptions';
 import type {
   BodyVariantId,
+  ChestFluffVariantId,
+  CombShapeVariantId,
   FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
@@ -73,7 +75,13 @@ const loadStoredSelection = (): RoosterSelection => {
     featherPattern: isAllowedValue(storedSelection.featherPattern, partOptionsById.featherPattern)
       ? storedSelection.featherPattern
       : fallback.featherPattern,
+    combShape: isAllowedValue(storedSelection.combShape, partOptionsById.combShape)
+      ? storedSelection.combShape
+      : fallback.combShape,
     head: isAllowedValue(storedSelection.head, partOptionsById.head) ? storedSelection.head : fallback.head,
+    chestFluff: isAllowedValue(storedSelection.chestFluff, partOptionsById.chestFluff)
+      ? storedSelection.chestFluff
+      : fallback.chestFluff,
     feet: isAllowedValue(storedSelection.feet, partOptionsById.feet) ? storedSelection.feet : fallback.feet,
     headwear: isAllowedValue(storedSelection.headwear, partOptionsById.headwear)
       ? storedSelection.headwear
@@ -126,8 +134,16 @@ function App() {
     setSelection((current) => ({ ...current, featherPattern: value }));
   };
 
+  const updateCombShape = (value: CombShapeVariantId) => {
+    setSelection((current) => ({ ...current, combShape: value }));
+  };
+
   const updateHead = (value: HeadVariantId) => {
     setSelection((current) => ({ ...current, head: value }));
+  };
+
+  const updateChestFluff = (value: ChestFluffVariantId) => {
+    setSelection((current) => ({ ...current, chestFluff: value }));
   };
 
   const updateFeet = (value: FeetVariantId) => {
@@ -180,13 +196,13 @@ function App() {
           <p className="eyebrow">Farm Avatar Generator MVP</p>
           <h1>Build a demo-ready rooster in minutes.</h1>
           <p className="hero-copy">
-            Start with a rooster, mix tail shapes and feather patterns, and tweak colours live. The
+            Start with a rooster, mix tail shapes, combs, and chest fluff, and tweak colours live. The
             setup stays lightweight so you can test reactions and expand into more farm animals later.
           </p>
         </div>
         <div className="hero-card">
           <span className="hero-badge">MVP focus</span>
-          <p>One live preview, seven customizable parts, and colour palettes that keep the demo playful.</p>
+          <p>One live preview, nine customizable parts, and colour palettes that keep the demo playful.</p>
         </div>
       </header>
 
@@ -223,7 +239,9 @@ function App() {
               onTailChange={updateTail}
               onWingChange={updateWings}
               onFeatherPatternChange={updateFeatherPattern}
+              onCombShapeChange={updateCombShape}
               onHeadChange={updateHead}
+              onChestFluffChange={updateChestFluff}
               onFeetChange={updateFeet}
               onHeadwearChange={updateHeadwear}
               onBodyColorChange={updateBodyColor}
