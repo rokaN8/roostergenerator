@@ -1,11 +1,13 @@
 import type {
   BodyVariantId,
   ColorSection,
+  FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
   HeadwearVariantId,
   RoosterPartSection,
   RoosterSelection,
+  TailVariantId,
   WingVariantId,
 } from '../types/avatar';
 import './ControlPanel.css';
@@ -15,7 +17,9 @@ interface ControlPanelProps {
   colorSections: ColorSection[];
   selection: RoosterSelection;
   onBodyChange: (value: BodyVariantId) => void;
+  onTailChange: (value: TailVariantId) => void;
   onWingChange: (value: WingVariantId) => void;
+  onFeatherPatternChange: (value: FeatherPatternVariantId) => void;
   onHeadChange: (value: HeadVariantId) => void;
   onFeetChange: (value: FeetVariantId) => void;
   onHeadwearChange: (value: HeadwearVariantId) => void;
@@ -31,7 +35,9 @@ export function ControlPanel({
   colorSections,
   selection,
   onBodyChange,
+  onTailChange,
   onWingChange,
+  onFeatherPatternChange,
   onHeadChange,
   onFeetChange,
   onHeadwearChange,
@@ -46,8 +52,14 @@ export function ControlPanel({
       case 'body':
         onBodyChange(optionId as BodyVariantId);
         return;
+      case 'tail':
+        onTailChange(optionId as TailVariantId);
+        return;
       case 'wings':
         onWingChange(optionId as WingVariantId);
+        return;
+      case 'featherPattern':
+        onFeatherPatternChange(optionId as FeatherPatternVariantId);
         return;
       case 'head':
         onHeadChange(optionId as HeadVariantId);
@@ -85,8 +97,12 @@ export function ControlPanel({
     switch (section.id) {
       case 'body':
         return selection.body;
+      case 'tail':
+        return selection.tail;
       case 'wings':
         return selection.wings;
+      case 'featherPattern':
+        return selection.featherPattern;
       case 'head':
         return selection.head;
       case 'feet':

@@ -1,17 +1,21 @@
 import type {
   BodyVariantId,
   ColorSection,
+  FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
   HeadwearVariantId,
   PartSection,
   RoosterSelection,
+  TailVariantId,
   WingVariantId,
 } from '../types/avatar';
 
 export const roosterPartSections: [
   PartSection<'body', BodyVariantId>,
+  PartSection<'tail', TailVariantId>,
   PartSection<'wings', WingVariantId>,
+  PartSection<'featherPattern', FeatherPatternVariantId>,
   PartSection<'head', HeadVariantId>,
   PartSection<'feet', FeetVariantId>,
   PartSection<'headwear', HeadwearVariantId>,
@@ -27,6 +31,17 @@ export const roosterPartSections: [
     ],
   },
   {
+    id: 'tail',
+    title: 'Tail',
+    description: 'Change rear feather silhouette and sweep.',
+    options: [
+      { id: 'classic', label: 'Classic', description: 'Balanced tail feathers with a familiar farm look.' },
+      { id: 'fan', label: 'Fan', description: 'Wider spread for a fuller tail display.' },
+      { id: 'sickle', label: 'Sickle', description: 'Longer curved feathers with more strut.' },
+      { id: 'fluffy', label: 'Fluffy', description: 'Rounder layered tail for a softer silhouette.' },
+    ],
+  },
+  {
     id: 'wings',
     title: 'Wings',
     description: 'Tune the wing attitude and feather shape.',
@@ -34,6 +49,17 @@ export const roosterPartSections: [
       { id: 'tucked', label: 'Tucked', description: 'Neat wings resting against the body.' },
       { id: 'spread', label: 'Spread', description: 'A bolder shape ready to impress.' },
       { id: 'layered', label: 'Layered', description: 'More feather detail for the silhouette.' },
+    ],
+  },
+  {
+    id: 'featherPattern',
+    title: 'Feather pattern',
+    description: 'Add subtle texture to the body feathers.',
+    options: [
+      { id: 'clean', label: 'Clean', description: 'Solid body colour with no extra markings.' },
+      { id: 'barred', label: 'Barred', description: 'Striped feather bands across the torso.' },
+      { id: 'speckled', label: 'Speckled', description: 'Small spots for a mottled barnyard look.' },
+      { id: 'tipped', label: 'Tipped', description: 'Light feather tips for extra definition.' },
     ],
   },
   {
@@ -129,7 +155,9 @@ export const colorSections: ColorSection[] = [
 
 export const defaultRoosterSelection: RoosterSelection = {
   body: 'classic',
+  tail: 'classic',
   wings: 'tucked',
+  featherPattern: 'clean',
   head: 'alert',
   feet: 'sturdy',
   headwear: 'none',

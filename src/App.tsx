@@ -9,10 +9,12 @@ import {
 } from './data/roosterOptions';
 import type {
   BodyVariantId,
+  FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
   HeadwearVariantId,
   RoosterSelection,
+  TailVariantId,
   WingVariantId,
 } from './types/avatar';
 
@@ -26,8 +28,16 @@ function App() {
     setSelection((current) => ({ ...current, body: value }));
   };
 
+  const updateTail = (value: TailVariantId) => {
+    setSelection((current) => ({ ...current, tail: value }));
+  };
+
   const updateWings = (value: WingVariantId) => {
     setSelection((current) => ({ ...current, wings: value }));
+  };
+
+  const updateFeatherPattern = (value: FeatherPatternVariantId) => {
+    setSelection((current) => ({ ...current, featherPattern: value }));
   };
 
   const updateHead = (value: HeadVariantId) => {
@@ -84,13 +94,13 @@ function App() {
           <p className="eyebrow">Farm Avatar Generator MVP</p>
           <h1>Build a demo-ready rooster in minutes.</h1>
           <p className="hero-copy">
-            Start with a rooster, mix part styles, and tweak colours live. The setup is intentionally
-            lightweight so you can test reactions and expand into more farm animals later.
+            Start with a rooster, mix tail shapes and feather patterns, and tweak colours live. The
+            setup stays lightweight so you can test reactions and expand into more farm animals later.
           </p>
         </div>
         <div className="hero-card">
           <span className="hero-badge">MVP focus</span>
-          <p>One live preview, five customizable parts, and colour palettes that keep the demo playful.</p>
+          <p>One live preview, seven customizable parts, and colour palettes that keep the demo playful.</p>
         </div>
       </header>
 
@@ -99,7 +109,7 @@ function App() {
           <div className="panel-header">
             <div>
               <h2>Rooster preview</h2>
-              <p>Adjust the rooster with simple dropdowns while the preview idles through a light walk loop.</p>
+              <p>Adjust tail shape and feather texture while the preview idles through a light walk loop.</p>
             </div>
             <span className="panel-pill">Idle loop</span>
           </div>
@@ -114,7 +124,9 @@ function App() {
               colorSections={colorSections}
               selection={selection}
               onBodyChange={updateBody}
+              onTailChange={updateTail}
               onWingChange={updateWings}
+              onFeatherPatternChange={updateFeatherPattern}
               onHeadChange={updateHead}
               onFeetChange={updateFeet}
               onHeadwearChange={updateHeadwear}

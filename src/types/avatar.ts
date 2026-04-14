@@ -1,5 +1,7 @@
 export type BodyVariantId = 'classic' | 'plump' | 'runner';
+export type TailVariantId = 'classic' | 'fan' | 'sickle' | 'fluffy';
 export type WingVariantId = 'tucked' | 'spread' | 'layered';
+export type FeatherPatternVariantId = 'clean' | 'barred' | 'speckled' | 'tipped';
 export type HeadVariantId = 'alert' | 'proud' | 'cheery';
 export type FeetVariantId = 'sturdy' | 'scratch' | 'strut';
 export type HeadwearVariantId = 'none' | 'baseball-cap' | 'farmer-hat' | 'straw-hat';
@@ -39,19 +41,23 @@ export interface RoosterColors {
 
 export interface RoosterSelection {
   body: BodyVariantId;
+  tail: TailVariantId;
   wings: WingVariantId;
+  featherPattern: FeatherPatternVariantId;
   head: HeadVariantId;
   feet: FeetVariantId;
   headwear: HeadwearVariantId;
   colors: RoosterColors;
 }
 
-export type RoosterPartKey = 'body' | 'wings' | 'head' | 'feet' | 'headwear';
+export type RoosterPartKey = 'body' | 'tail' | 'wings' | 'featherPattern' | 'head' | 'feet' | 'headwear';
 export type RoosterColorKey = keyof RoosterColors;
 
 export type RoosterPartSection =
   | PartSection<'body', BodyVariantId>
+  | PartSection<'tail', TailVariantId>
   | PartSection<'wings', WingVariantId>
+  | PartSection<'featherPattern', FeatherPatternVariantId>
   | PartSection<'head', HeadVariantId>
   | PartSection<'feet', FeetVariantId>
   | PartSection<'headwear', HeadwearVariantId>;
