@@ -12,6 +12,7 @@ import type {
   BodyVariantId,
   ChestFluffVariantId,
   CombShapeVariantId,
+  EyeAccessoryVariantId,
   FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
@@ -92,6 +93,7 @@ const loadStoredSelection = (): RoosterSelection => {
       ? storedSelection.combShape
       : fallback.combShape,
     head: isAllowedValue(storedSelection.head, partOptionsById.head) ? storedSelection.head : fallback.head,
+    eyes: isAllowedValue(storedSelection.eyes, partOptionsById.eyes) ? storedSelection.eyes : fallback.eyes,
     chestFluff: isAllowedValue(storedSelection.chestFluff, partOptionsById.chestFluff)
       ? storedSelection.chestFluff
       : fallback.chestFluff,
@@ -156,6 +158,10 @@ function App() {
     setSelection((current) => ({ ...current, head: value }));
   };
 
+  const updateEyes = (value: EyeAccessoryVariantId) => {
+    setSelection((current) => ({ ...current, eyes: value }));
+  };
+
   const updateChestFluff = (value: ChestFluffVariantId) => {
     setSelection((current) => ({ ...current, chestFluff: value }));
   };
@@ -211,7 +217,7 @@ function App() {
           <h1>{viewMode === 'builder' ? 'Build a demo-ready rooster in minutes.' : 'Stress test a whole flock on screen.'}</h1>
           <p className="hero-copy">
             {viewMode === 'builder'
-              ? 'Start with a rooster, mix tail shapes, combs, and chest fluff, and tweak colours live. The setup stays lightweight so you can test reactions and expand into more farm animals later.'
+              ? 'Start with a rooster, mix tail shapes, combs, eye accessories, and chest fluff, and tweak colours live. The setup stays lightweight so you can test reactions and expand into more farm animals later.'
               : 'Fill a farm with randomized roosters, vary the flock count, and watch the frame rate while foreground and background birds stack across the scene.'}
           </p>
         </div>
@@ -219,7 +225,7 @@ function App() {
           <span className="hero-badge">MVP focus</span>
           <p>
             {viewMode === 'builder'
-              ? 'One live preview, nine customizable parts, and colour palettes that keep the demo playful.'
+              ? 'One live preview, ten customizable parts, and colour palettes that keep the demo playful.'
               : 'One stress scene, randomized roosters, and an FPS counter for quick render pressure checks.'}
           </p>
           <div className="view-switch" role="tablist" aria-label="View mode">
@@ -247,7 +253,7 @@ function App() {
             <div className="panel-header">
               <div>
                 <h2>Rooster preview</h2>
-                <p>Adjust tail shape and feather texture while the preview idles through a light walk loop.</p>
+                <p>Adjust eye accessories, tail shape, and feather texture while preview idles through a light walk loop.</p>
               </div>
               <div className="preview-tools">
                 <label className="motion-toggle">
@@ -277,6 +283,7 @@ function App() {
                 onFeatherPatternChange={updateFeatherPattern}
                 onCombShapeChange={updateCombShape}
                 onHeadChange={updateHead}
+                onEyesChange={updateEyes}
                 onChestFluffChange={updateChestFluff}
                 onFeetChange={updateFeet}
                 onHeadwearChange={updateHeadwear}

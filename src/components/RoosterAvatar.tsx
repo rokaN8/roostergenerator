@@ -367,6 +367,39 @@ const renderComb = (variant: RoosterSelection['combShape'], fill: string, cx: nu
   }
 };
 
+const renderEyeAccessory = (
+  variant: RoosterSelection['eyes'],
+  eyeX: number,
+  eyeY: number,
+) => {
+  switch (variant) {
+    case 'round-glasses':
+      return (
+        <g fill="none" stroke={outline} strokeLinecap="round" strokeLinejoin="round">
+          <circle cx={eyeX} cy={eyeY} r="10.5" strokeWidth="4" />
+          <circle cx={eyeX - 18} cy={eyeY - 1} r="7.5" stroke="rgba(79,57,34,0.6)" strokeWidth="3.5" />
+          <path d={`M${eyeX - 10} ${eyeY - 2}h9`} strokeWidth="3.5" />
+          <path d={`M${eyeX + 8} ${eyeY - 1}l11 1`} strokeWidth="3.5" />
+        </g>
+      );
+    case 'sunglasses':
+      return (
+        <g stroke={outline} strokeLinecap="round" strokeLinejoin="round">
+          <path
+            d={`M${eyeX - 11} ${eyeY - 7}c7-3 15-3 22 0 0 8-1 13-4 16-8 2-15 2-22 0-1-6 0-12 4-16z`}
+            fill="#1f242c"
+            strokeWidth="4"
+          />
+          <path d={`M${eyeX - 8} ${eyeY - 2}c4-1 8-1 12 0`} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2.5" />
+          <path d={`M${eyeX + 10} ${eyeY - 4}l12 1`} fill="none" strokeWidth="3.5" />
+        </g>
+      );
+    case 'none':
+    default:
+      return null;
+  }
+};
+
 const renderChestFluff = (
   variant: RoosterSelection['chestFluff'],
   bodyFill: string,
@@ -434,6 +467,7 @@ const renderChestFluff = (
 const renderHead = (
   variant: RoosterSelection['head'],
   combShape: RoosterSelection['combShape'],
+  eyes: RoosterSelection['eyes'],
   comb: string,
   beak: string,
 ) => {
@@ -445,6 +479,7 @@ const renderHead = (
           {renderComb(combShape, comb, 218, 104)}
           <path d="M244 107l28 9-28 12c-8-3-10-17 0-21z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <circle cx="224" cy="103" r="4.7" fill={eyeColor} />
+          {renderEyeAccessory(eyes, 224, 103)}
         </g>
       );
     case 'cheery':
@@ -455,6 +490,7 @@ const renderHead = (
           <path d="M239 114l25 8-25 11c-8-4-9-15 0-19z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <path d="M198 131c9 2 18 3 26 0" fill="none" stroke={outline} strokeLinecap="round" strokeWidth="4" />
           <circle cx="221" cy="108" r="4.7" fill={eyeColor} />
+          {renderEyeAccessory(eyes, 221, 108)}
         </g>
       );
     case 'alert':
@@ -465,6 +501,7 @@ const renderHead = (
           {renderComb(combShape, comb, 214, 110)}
           <path d="M239 113l26 8-26 11c-7-4-9-16 0-19z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
           <circle cx="221" cy="108" r="4.7" fill={eyeColor} />
+          {renderEyeAccessory(eyes, 221, 108)}
         </g>
       );
   }
@@ -587,7 +624,7 @@ export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: Ro
               <g className="rooster-wing">{renderWing(selection.wings, selection.colors.wings)}</g>
               <g transform={headTransform}>
                 <g className="rooster-head">
-                  {renderHead(selection.head, selection.combShape, selection.colors.comb, selection.colors.beak)}
+                  {renderHead(selection.head, selection.combShape, selection.eyes, selection.colors.comb, selection.colors.beak)}
                   {renderHeadwear(selection.headwear, selection.colors.headwear)}
                 </g>
               </g>

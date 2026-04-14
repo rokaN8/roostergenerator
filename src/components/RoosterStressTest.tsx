@@ -29,9 +29,10 @@ const wingOptions = roosterPartSections[2].options.map((option) => option.id);
 const featherPatternOptions = roosterPartSections[3].options.map((option) => option.id);
 const combShapeOptions = roosterPartSections[4].options.map((option) => option.id);
 const headOptions = roosterPartSections[5].options.map((option) => option.id);
-const chestFluffOptions = roosterPartSections[6].options.map((option) => option.id);
-const feetOptions = roosterPartSections[7].options.map((option) => option.id);
-const headwearOptions = roosterPartSections[8].options.map((option) => option.id);
+const eyeOptions = roosterPartSections[6].options.map((option) => option.id);
+const chestFluffOptions = roosterPartSections[7].options.map((option) => option.id);
+const feetOptions = roosterPartSections[8].options.map((option) => option.id);
+const headwearOptions = roosterPartSections[9].options.map((option) => option.id);
 
 const bodyColorOptions = colorSections[0].options.map((option) => option.value);
 const wingColorOptions = colorSections[1].options.map((option) => option.value);
@@ -48,6 +49,7 @@ const createRandomSelection = (): RoosterSelection => ({
   featherPattern: pick(featherPatternOptions),
   combShape: pick(combShapeOptions),
   head: pick(headOptions),
+  eyes: pick(eyeOptions),
   chestFluff: pick(chestFluffOptions),
   feet: pick(feetOptions),
   headwear: pick(headwearOptions),

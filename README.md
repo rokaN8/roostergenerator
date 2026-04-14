@@ -5,7 +5,7 @@ Small React + Vite character builder for making a customizable rooster.
 ## Features
 
 - Live rooster preview
-- Part customization for body, tail, wings, feather pattern, comb shape, head, chest fluff, feet, and headwear
+- Part customization for body, tail, wings, feather pattern, comb shape, head, eyes, chest fluff, feet, and headwear
 - Color customization for body, wings, comb, beak/feet, and headwear
 - Optional preview animation toggle
 - Saved customization with `localStorage`

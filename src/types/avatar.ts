@@ -4,6 +4,7 @@ export type WingVariantId = 'tucked' | 'spread' | 'layered';
 export type FeatherPatternVariantId = 'clean' | 'barred' | 'speckled' | 'tipped';
 export type CombShapeVariantId = 'classic' | 'rose' | 'pea' | 'show';
 export type HeadVariantId = 'alert' | 'proud' | 'cheery';
+export type EyeAccessoryVariantId = 'none' | 'round-glasses' | 'sunglasses';
 export type ChestFluffVariantId = 'sleek' | 'ruff' | 'puffed' | 'layered';
 export type FeetVariantId = 'sturdy' | 'scratch' | 'strut';
 export type HeadwearVariantId = 'none' | 'dunce-cap' | 'farmer-hat' | 'straw-hat';
@@ -48,6 +49,7 @@ export interface RoosterSelection {
   featherPattern: FeatherPatternVariantId;
   combShape: CombShapeVariantId;
   head: HeadVariantId;
+  eyes: EyeAccessoryVariantId;
   chestFluff: ChestFluffVariantId;
   feet: FeetVariantId;
   headwear: HeadwearVariantId;
@@ -61,6 +63,7 @@ export type RoosterPartKey =
   | 'featherPattern'
   | 'combShape'
   | 'head'
+  | 'eyes'
   | 'chestFluff'
   | 'feet'
   | 'headwear';
@@ -73,6 +76,7 @@ export type RoosterPartSection =
   | PartSection<'featherPattern', FeatherPatternVariantId>
   | PartSection<'combShape', CombShapeVariantId>
   | PartSection<'head', HeadVariantId>
+  | PartSection<'eyes', EyeAccessoryVariantId>
   | PartSection<'chestFluff', ChestFluffVariantId>
   | PartSection<'feet', FeetVariantId>
   | PartSection<'headwear', HeadwearVariantId>;

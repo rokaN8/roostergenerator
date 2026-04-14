@@ -3,6 +3,7 @@ import type {
   ChestFluffVariantId,
   ColorSection,
   CombShapeVariantId,
+  EyeAccessoryVariantId,
   FeatherPatternVariantId,
   FeetVariantId,
   HeadVariantId,
@@ -24,6 +25,7 @@ interface ControlPanelProps {
   onFeatherPatternChange: (value: FeatherPatternVariantId) => void;
   onCombShapeChange: (value: CombShapeVariantId) => void;
   onHeadChange: (value: HeadVariantId) => void;
+  onEyesChange: (value: EyeAccessoryVariantId) => void;
   onChestFluffChange: (value: ChestFluffVariantId) => void;
   onFeetChange: (value: FeetVariantId) => void;
   onHeadwearChange: (value: HeadwearVariantId) => void;
@@ -44,6 +46,7 @@ export function ControlPanel({
   onFeatherPatternChange,
   onCombShapeChange,
   onHeadChange,
+  onEyesChange,
   onChestFluffChange,
   onFeetChange,
   onHeadwearChange,
@@ -72,6 +75,9 @@ export function ControlPanel({
         return;
       case 'head':
         onHeadChange(optionId as HeadVariantId);
+        return;
+      case 'eyes':
+        onEyesChange(optionId as EyeAccessoryVariantId);
         return;
       case 'chestFluff':
         onChestFluffChange(optionId as ChestFluffVariantId);
@@ -119,6 +125,8 @@ export function ControlPanel({
         return selection.combShape;
       case 'head':
         return selection.head;
+      case 'eyes':
+        return selection.eyes;
       case 'chestFluff':
         return selection.chestFluff;
       case 'feet':
