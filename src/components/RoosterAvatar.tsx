@@ -10,6 +10,8 @@ interface RoosterAvatarProps {
 const outline = '#4f3922';
 const tailBase = '#624126';
 const eyeColor = '#2b1d12';
+// Tweak tattoo placement here. Positive X moves right, positive Y moves down.
+const tattooTransform = 'translate(5 55)';
 
 const getHeadTransform = (variant: RoosterSelection['head']) => {
   switch (variant) {
@@ -295,74 +297,125 @@ const renderFeatherPattern = (
   }
 };
 
+const renderTattoo = (variant: RoosterSelection['tattoo'], clipPathId: string) => {
+  const clipPath = `url(#${clipPathId})`;
+  const tattooStroke = 'rgba(56, 43, 36, 0.6)';
+  const tattooFill = 'rgba(56, 43, 36, 0.12)';
+
+  switch (variant) {
+    case 'heart':
+      return (
+        <g clipPath={clipPath} opacity="0.95" transform={tattooTransform}>
+          <path
+            d="M176 150c-8-11-2-24 10-24 6 0 10 4 12 9 2-5 6-9 12-9 12 0 18 13 10 24-7 10-15 17-22 24-7-7-15-14-22-24z"
+            fill={tattooFill}
+            stroke={tattooStroke}
+            strokeLinejoin="round"
+            strokeWidth="4.5"
+          />
+        </g>
+      );
+    case 'skull':
+      return (
+        <g clipPath={clipPath} opacity="0.95" transform={tattooTransform}>
+          <path
+            d="M190 128c12 0 22 8 22 21 0 7-3 12-7 16v11c0 3-2 5-5 5h-20c-3 0-5-2-5-5v-11c-5-4-7-9-7-16 0-13 10-21 22-21z"
+            fill={tattooFill}
+            stroke={tattooStroke}
+            strokeLinejoin="round"
+            strokeWidth="4.5"
+          />
+          <circle cx="182" cy="148" r="4.5" fill={tattooStroke} />
+          <circle cx="198" cy="148" r="4.5" fill={tattooStroke} />
+          <path d="M190 157l-4 7h8z" fill={tattooStroke} />
+          <path d="M182 169v8M190 169v8M198 169v8" fill="none" stroke={tattooStroke} strokeLinecap="round" strokeWidth="4" />
+        </g>
+      );
+    case 'x-mark':
+      return (
+        <g clipPath={clipPath} opacity="0.95" transform={tattooTransform}>
+          <path d="M174 134l32 36" fill="none" stroke={tattooStroke} strokeLinecap="round" strokeWidth="8" />
+          <path d="M206 134l-32 36" fill="none" stroke={tattooStroke} strokeLinecap="round" strokeWidth="8" />
+        </g>
+      );
+    case 'lightning':
+      return (
+        <g clipPath={clipPath} opacity="0.95" transform={tattooTransform}>
+          <path
+            d="M192 126l-18 26h15l-7 21 27-34h-15l7-13z"
+            fill={tattooFill}
+            stroke={tattooStroke}
+            strokeLinejoin="round"
+            strokeWidth="4.5"
+          />
+        </g>
+      );
+    case 'none':
+    default:
+      return null;
+  }
+};
+
+// Wattle rendered BEFORE the head circle so the head masks its top half.
+const renderWattle = (cx: number, cy: number, fill: string) => (
+  <ellipse
+    cx={cx + 4}
+    cy={cy + 34}
+    rx="16"
+    ry="16"
+    fill={fill}
+    stroke={outline}
+    strokeWidth="5"
+  />
+);
+
 const renderComb = (variant: RoosterSelection['combShape'], fill: string, cx: number, cy: number) => {
   switch (variant) {
     case 'rose':
+      // Flat low-profile oval with a small central spike.
       return (
         <>
-          <ellipse cx={cx - 8} cy={cy - 24} rx="21" ry="10" fill={fill} stroke={outline} strokeWidth="5" />
+          <ellipse cx={cx - 8} cy={cy - 22} rx="20" ry="8" fill={fill} stroke={outline} strokeWidth="5" />
           <path
-            d={`M${cx - 22} ${cy + 19}c11-7 24-8 34 0-4 11-14 18-26 18-8-4-11-11-8-18z`}
+            d={`M${cx - 4} ${cy - 26}c0-8 4-14 6-14s6 6 6 14`}
             fill={fill}
             stroke={outline}
             strokeLinejoin="round"
-            strokeWidth="5"
+            strokeWidth="4"
           />
         </>
       );
     case 'pea':
+      // Three small rounded bumps in a row.
       return (
         <>
-          <circle cx={cx - 22} cy={cy - 24} r="7" fill={fill} stroke={outline} strokeWidth="4.5" />
-          <circle cx={cx - 10} cy={cy - 27} r="8" fill={fill} stroke={outline} strokeWidth="4.5" />
-          <circle cx={cx + 3} cy={cy - 24} r="7" fill={fill} stroke={outline} strokeWidth="4.5" />
-          <path
-            d={`M${cx - 18} ${cy + 18}c7-5 17-6 24 0-2 9-9 15-18 16-6-4-8-9-6-16z`}
-            fill={fill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
+          <circle cx={cx - 20} cy={cy - 26} r="7" fill={fill} stroke={outline} strokeWidth="4.5" />
+          <circle cx={cx - 8} cy={cy - 29} r="8.5" fill={fill} stroke={outline} strokeWidth="4.5" />
+          <circle cx={cx + 5} cy={cy - 26} r="7" fill={fill} stroke={outline} strokeWidth="4.5" />
         </>
       );
     case 'show':
+      // Tall dramatic single-blade comb.
       return (
-        <>
-          <path
-            d={`M${cx - 32} ${cy - 10}c5-22 18-33 31-33 8 0 14 3 18 8-4 12-4 24 2 36-10 0-17-3-24-9-7 5-16 8-27 8z`}
-            fill={fill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-          <path
-            d={`M${cx - 21} ${cy + 18}c13-7 27-6 37 3-4 15-14 23-28 24-11-6-15-17-9-27z`}
-            fill={fill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-        </>
+        <path
+          d={`M${cx - 26} ${cy - 18}c2-16 8-32 14-40 6-8 12-10 16-6 4 4 4 14 0 26-2 6-6 14-12 20z`}
+          fill={fill}
+          stroke={outline}
+          strokeLinejoin="round"
+          strokeWidth="5"
+        />
       );
     case 'classic':
     default:
+      // Three distinct upright lobes — lobe 2 (middle) tallest.
       return (
-        <>
-          <path
-            d={`M${cx - 31} ${cy - 19}c3-15 16-24 29-24 7 0 13 2 16 5-5 11-5 23 4 34-11 0-21-3-28-10-7 5-14 7-21 8z`}
-            fill={fill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-          <path
-            d={`M${cx - 27} ${cy + 24}c11-2 22-1 29 6-2 9-9 17-21 19-9-6-12-16-8-25z`}
-            fill={fill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-        </>
+        <path
+          d={`M${cx - 26} ${cy - 20}c-2-8 2-20 8-22 6-2 10 10 8 22 0-10 4-24 8-26 4-2 8 14 8 26 0-8 2-18 6-20 4-2 6 12 6 20z`}
+          fill={fill}
+          stroke={outline}
+          strokeLinejoin="round"
+          strokeWidth="5"
+        />
       );
   }
 };
@@ -400,70 +453,6 @@ const renderEyeAccessory = (
   }
 };
 
-const renderChestFluff = (
-  variant: RoosterSelection['chestFluff'],
-  bodyFill: string,
-  accentFill: string,
-) => {
-  switch (variant) {
-    case 'ruff':
-      return (
-        <g>
-          <path
-            d="M188 132c12 4 22 13 28 25-6 12-17 21-31 27-16-3-28-13-35-28 6-10 18-20 38-24z"
-            fill={bodyFill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-          <path d="M182 154c11 3 20 10 28 21" fill="none" stroke="rgba(255,255,255,0.2)" strokeLinecap="round" strokeWidth="7" />
-        </g>
-      );
-    case 'puffed':
-      return (
-        <g>
-          <path
-            d="M184 136c17 4 33 15 39 33-3 17-17 31-38 38-20-3-35-18-37-38 4-15 15-28 36-33z"
-            fill={bodyFill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-          <ellipse cx="184" cy="174" rx="22" ry="18" fill="rgba(255,255,255,0.14)" />
-        </g>
-      );
-    case 'layered':
-      return (
-        <g>
-          <path
-            d="M186 136c15 5 28 15 33 29-5 17-18 29-36 34-20-5-30-18-33-33 4-13 17-25 36-30z"
-            fill={bodyFill}
-            stroke={outline}
-            strokeLinejoin="round"
-            strokeWidth="5"
-          />
-          <path
-            d="M176 152c9 2 18 9 25 18-5 7-12 11-22 13-8-3-14-8-18-15 4-8 8-13 15-16z"
-            fill={accentFill}
-            opacity="0.4"
-          />
-          <path d="M171 163c9 2 16 8 20 15" fill="none" stroke="rgba(255,255,255,0.18)" strokeLinecap="round" strokeWidth="6" />
-        </g>
-      );
-    case 'sleek':
-    default:
-      return (
-        <path
-          d="M188 141c11 5 18 14 20 24-5 10-13 17-25 21-12-3-19-12-22-22 4-11 12-18 27-23z"
-          fill={bodyFill}
-          stroke={outline}
-          strokeLinejoin="round"
-          strokeWidth="5"
-        />
-      );
-  }
-};
-
 const renderHead = (
   variant: RoosterSelection['head'],
   combShape: RoosterSelection['combShape'],
@@ -475,6 +464,7 @@ const renderHead = (
     case 'proud':
       return (
         <g>
+          {renderWattle(218, 104, comb)}
           <circle cx="218" cy="104" r="34" fill="#f4eddc" stroke={outline} strokeWidth="6" />
           {renderComb(combShape, comb, 218, 104)}
           <path d="M244 107l28 9-28 12c-8-3-10-17 0-21z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
@@ -485,6 +475,7 @@ const renderHead = (
     case 'cheery':
       return (
         <g>
+          {renderWattle(214, 110, comb)}
           <circle cx="214" cy="110" r="32" fill="#f4eddc" stroke={outline} strokeWidth="6" />
           {renderComb(combShape, comb, 214, 110)}
           <path d="M239 114l25 8-25 11c-8-4-9-15 0-19z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
@@ -497,6 +488,7 @@ const renderHead = (
     default:
       return (
         <g>
+          {renderWattle(214, 110, comb)}
           <circle cx="214" cy="110" r="32" fill="#f4eddc" stroke={outline} strokeWidth="6" />
           {renderComb(combShape, comb, 214, 110)}
           <path d="M239 113l26 8-26 11c-7-4-9-16 0-19z" fill={beak} stroke={outline} strokeLinejoin="round" strokeWidth="5" />
@@ -619,8 +611,8 @@ export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: Ro
               <g className="rooster-tail">{renderTail(selection.tail, selection.colors.wings)}</g>
               {renderFeet(selection.feet, selection.colors.beak)}
               {renderBody(selection.body, selection.colors.body)}
-              {renderChestFluff(selection.chestFluff, selection.colors.body, selection.colors.wings)}
               {renderFeatherPattern(selection.featherPattern, bodyClipId, selection.colors.wings)}
+              {renderTattoo(selection.tattoo, bodyClipId)}
               <g className="rooster-wing">{renderWing(selection.wings, selection.colors.wings)}</g>
               <g transform={headTransform}>
                 <g className="rooster-head">

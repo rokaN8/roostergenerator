@@ -1,6 +1,5 @@
 import type {
   BodyVariantId,
-  ChestFluffVariantId,
   ColorSection,
   CombShapeVariantId,
   EyeAccessoryVariantId,
@@ -10,6 +9,7 @@ import type {
   HeadwearVariantId,
   RoosterPartSection,
   RoosterSelection,
+  TattooVariantId,
   TailVariantId,
   WingVariantId,
 } from '../types/avatar';
@@ -23,10 +23,10 @@ interface ControlPanelProps {
   onTailChange: (value: TailVariantId) => void;
   onWingChange: (value: WingVariantId) => void;
   onFeatherPatternChange: (value: FeatherPatternVariantId) => void;
+  onTattooChange: (value: TattooVariantId) => void;
   onCombShapeChange: (value: CombShapeVariantId) => void;
   onHeadChange: (value: HeadVariantId) => void;
   onEyesChange: (value: EyeAccessoryVariantId) => void;
-  onChestFluffChange: (value: ChestFluffVariantId) => void;
   onFeetChange: (value: FeetVariantId) => void;
   onHeadwearChange: (value: HeadwearVariantId) => void;
   onBodyColorChange: (value: string) => void;
@@ -44,10 +44,10 @@ export function ControlPanel({
   onTailChange,
   onWingChange,
   onFeatherPatternChange,
+  onTattooChange,
   onCombShapeChange,
   onHeadChange,
   onEyesChange,
-  onChestFluffChange,
   onFeetChange,
   onHeadwearChange,
   onBodyColorChange,
@@ -70,6 +70,9 @@ export function ControlPanel({
       case 'featherPattern':
         onFeatherPatternChange(optionId as FeatherPatternVariantId);
         return;
+      case 'tattoo':
+        onTattooChange(optionId as TattooVariantId);
+        return;
       case 'combShape':
         onCombShapeChange(optionId as CombShapeVariantId);
         return;
@@ -78,9 +81,6 @@ export function ControlPanel({
         return;
       case 'eyes':
         onEyesChange(optionId as EyeAccessoryVariantId);
-        return;
-      case 'chestFluff':
-        onChestFluffChange(optionId as ChestFluffVariantId);
         return;
       case 'feet':
         onFeetChange(optionId as FeetVariantId);
@@ -121,14 +121,14 @@ export function ControlPanel({
         return selection.wings;
       case 'featherPattern':
         return selection.featherPattern;
+      case 'tattoo':
+        return selection.tattoo;
       case 'combShape':
         return selection.combShape;
       case 'head':
         return selection.head;
       case 'eyes':
         return selection.eyes;
-      case 'chestFluff':
-        return selection.chestFluff;
       case 'feet':
         return selection.feet;
       case 'headwear':

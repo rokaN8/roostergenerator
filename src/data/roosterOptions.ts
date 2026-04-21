@@ -1,6 +1,5 @@
 import type {
   BodyVariantId,
-  ChestFluffVariantId,
   ColorSection,
   CombShapeVariantId,
   EyeAccessoryVariantId,
@@ -8,6 +7,7 @@ import type {
   FeetVariantId,
   HeadVariantId,
   HeadwearVariantId,
+  TattooVariantId,
   PartSection,
   RoosterSelection,
   TailVariantId,
@@ -19,10 +19,10 @@ export const roosterPartSections: [
   PartSection<'tail', TailVariantId>,
   PartSection<'wings', WingVariantId>,
   PartSection<'featherPattern', FeatherPatternVariantId>,
+  PartSection<'tattoo', TattooVariantId>,
   PartSection<'combShape', CombShapeVariantId>,
   PartSection<'head', HeadVariantId>,
   PartSection<'eyes', EyeAccessoryVariantId>,
-  PartSection<'chestFluff', ChestFluffVariantId>,
   PartSection<'feet', FeetVariantId>,
   PartSection<'headwear', HeadwearVariantId>,
 ] = [
@@ -69,6 +69,18 @@ export const roosterPartSections: [
     ],
   },
   {
+    id: 'tattoo',
+    title: 'Tattoo',
+    description: 'Stamp a little ink on the rooster body.',
+    options: [
+      { id: 'none', label: 'None', description: 'Keep the body clean.' },
+      { id: 'heart', label: 'Heart', description: 'A tiny heart for soft barnyard energy.' },
+      { id: 'skull', label: 'Skull', description: 'A cheeky skull with a little attitude.' },
+      { id: 'x-mark', label: 'X', description: 'A bold crossed mark for rougher flair.' },
+      { id: 'lightning', label: 'Lightning', description: 'A sharp bolt for speedy coop vibes.' },
+    ],
+  },
+  {
     id: 'combShape',
     title: 'Comb shape',
     description: 'Change the rooster comb silhouette.',
@@ -97,17 +109,6 @@ export const roosterPartSections: [
       { id: 'none', label: 'None', description: 'Keep the normal rooster eye visible.' },
       { id: 'round-glasses', label: 'Round glasses', description: 'Small round specs with a Harry Potter vibe.' },
       { id: 'sunglasses', label: 'Sunglasses', description: 'Dark shades for peak barnyard cool.' },
-    ],
-  },
-  {
-    id: 'chestFluff',
-    title: 'Chest fluff',
-    description: 'Add neck and chest feather volume.',
-    options: [
-      { id: 'sleek', label: 'Sleek', description: 'Smooth neck feathers with a tidy chest.' },
-      { id: 'ruff', label: 'Ruff', description: 'Extra neck fluff for a showier collar.' },
-      { id: 'puffed', label: 'Puffed', description: 'Rounded chest feathers with more volume.' },
-      { id: 'layered', label: 'Layered', description: 'Defined feather plates through the neck and chest.' },
     ],
   },
   {
@@ -216,10 +217,10 @@ export const defaultRoosterSelection: RoosterSelection = {
   tail: 'classic',
   wings: 'tucked',
   featherPattern: 'clean',
+  tattoo: 'none',
   combShape: 'classic',
   head: 'alert',
   eyes: 'none',
-  chestFluff: 'sleek',
   feet: 'sturdy',
   headwear: 'none',
   colors: {

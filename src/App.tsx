@@ -10,7 +10,6 @@ import {
 } from './data/roosterOptions';
 import type {
   BodyVariantId,
-  ChestFluffVariantId,
   CombShapeVariantId,
   EyeAccessoryVariantId,
   FeatherPatternVariantId,
@@ -18,6 +17,7 @@ import type {
   HeadVariantId,
   HeadwearVariantId,
   RoosterSelection,
+  TattooVariantId,
   TailVariantId,
   WingVariantId,
 } from './types/avatar';
@@ -89,14 +89,12 @@ const loadStoredSelection = (): RoosterSelection => {
     featherPattern: isAllowedValue(storedSelection.featherPattern, partOptionsById.featherPattern)
       ? storedSelection.featherPattern
       : fallback.featherPattern,
+    tattoo: isAllowedValue(storedSelection.tattoo, partOptionsById.tattoo) ? storedSelection.tattoo : fallback.tattoo,
     combShape: isAllowedValue(storedSelection.combShape, partOptionsById.combShape)
       ? storedSelection.combShape
       : fallback.combShape,
     head: isAllowedValue(storedSelection.head, partOptionsById.head) ? storedSelection.head : fallback.head,
     eyes: isAllowedValue(storedSelection.eyes, partOptionsById.eyes) ? storedSelection.eyes : fallback.eyes,
-    chestFluff: isAllowedValue(storedSelection.chestFluff, partOptionsById.chestFluff)
-      ? storedSelection.chestFluff
-      : fallback.chestFluff,
     feet: isAllowedValue(storedSelection.feet, partOptionsById.feet) ? storedSelection.feet : fallback.feet,
     headwear: isAllowedHeadwear(storedHeadwear) ? storedHeadwear : fallback.headwear,
     colors: {
@@ -150,6 +148,10 @@ function App() {
     setSelection((current) => ({ ...current, featherPattern: value }));
   };
 
+  const updateTattoo = (value: TattooVariantId) => {
+    setSelection((current) => ({ ...current, tattoo: value }));
+  };
+
   const updateCombShape = (value: CombShapeVariantId) => {
     setSelection((current) => ({ ...current, combShape: value }));
   };
@@ -160,10 +162,6 @@ function App() {
 
   const updateEyes = (value: EyeAccessoryVariantId) => {
     setSelection((current) => ({ ...current, eyes: value }));
-  };
-
-  const updateChestFluff = (value: ChestFluffVariantId) => {
-    setSelection((current) => ({ ...current, chestFluff: value }));
   };
 
   const updateFeet = (value: FeetVariantId) => {
@@ -217,7 +215,7 @@ function App() {
           <h1>{viewMode === 'builder' ? 'Build a demo-ready rooster in minutes.' : 'Stress test a whole flock on screen.'}</h1>
           <p className="hero-copy">
             {viewMode === 'builder'
-              ? 'Start with a rooster, mix tail shapes, combs, eye accessories, and chest fluff, and tweak colours live. The setup stays lightweight so you can test reactions and expand into more farm animals later.'
+              ? 'Start with a rooster, mix tail shapes, combs, eye accessories, and tattoos, and tweak colours live. The setup stays lightweight so you can test reactions and expand into more farm animals later.'
               : 'Fill a farm with randomized roosters, vary the flock count, and watch the frame rate while foreground and background birds stack across the scene.'}
           </p>
         </div>
@@ -225,7 +223,7 @@ function App() {
           <span className="hero-badge">MVP focus</span>
           <p>
             {viewMode === 'builder'
-              ? 'One live preview, ten customizable parts, and colour palettes that keep the demo playful.'
+              ? 'One live preview, ten customizable parts, tattoos included, and colour palettes that keep the demo playful.'
               : 'One stress scene, randomized roosters, and an FPS counter for quick render pressure checks.'}
           </p>
           <div className="view-switch" role="tablist" aria-label="View mode">
@@ -281,10 +279,10 @@ function App() {
                 onTailChange={updateTail}
                 onWingChange={updateWings}
                 onFeatherPatternChange={updateFeatherPattern}
+                onTattooChange={updateTattoo}
                 onCombShapeChange={updateCombShape}
                 onHeadChange={updateHead}
                 onEyesChange={updateEyes}
-                onChestFluffChange={updateChestFluff}
                 onFeetChange={updateFeet}
                 onHeadwearChange={updateHeadwear}
                 onBodyColorChange={updateBodyColor}
