@@ -21,6 +21,7 @@ import type {
   TailVariantId,
   WingVariantId,
 } from './types/avatar';
+import { createRandomSelection } from './utils/randomSelection';
 
 const selectionStorageKey = 'rooster-generator.selection';
 
@@ -101,6 +102,9 @@ const loadStoredSelection = (): RoosterSelection => {
       body: isAllowedValue(storedSelection.colors?.body, colorOptionsById.body)
         ? storedSelection.colors.body
         : fallback.colors.body,
+      tail: isAllowedValue(storedSelection.colors?.tail, colorOptionsById.tail)
+        ? storedSelection.colors.tail
+        : fallback.colors.tail,
       wings: isAllowedValue(storedSelection.colors?.wings, colorOptionsById.wings)
         ? storedSelection.colors.wings
         : fallback.colors.wings,
@@ -179,6 +183,13 @@ function App() {
     }));
   };
 
+  const updateTailColor = (value: string) => {
+    setSelection((current) => ({
+      ...current,
+      colors: { ...current.colors, tail: value },
+    }));
+  };
+
   const updateWingColor = (value: string) => {
     setSelection((current) => ({
       ...current,
@@ -205,6 +216,10 @@ function App() {
       ...current,
       colors: { ...current.colors, headwear: value },
     }));
+  };
+
+  const surpriseMe = () => {
+    setSelection(createRandomSelection());
   };
 
   return (
@@ -254,6 +269,9 @@ function App() {
                 <p>Adjust eye accessories, tail shape, and feather texture while preview idles through a light walk loop.</p>
               </div>
               <div className="preview-tools">
+                <button className="stress-button stress-button--secondary" type="button" onClick={surpriseMe}>
+                  Surprise me!
+                </button>
                 <label className="motion-toggle">
                   <input
                     type="checkbox"
@@ -286,6 +304,7 @@ function App() {
                 onFeetChange={updateFeet}
                 onHeadwearChange={updateHeadwear}
                 onBodyColorChange={updateBodyColor}
+                onTailColorChange={updateTailColor}
                 onWingColorChange={updateWingColor}
                 onCombColorChange={updateCombColor}
                 onBeakColorChange={updateBeakColor}

@@ -34,6 +34,9 @@ export const roosterPartSections: [
       { id: 'classic', label: 'Classic', description: 'Balanced barnyard proportions.' },
       { id: 'plump', label: 'Plump', description: 'Rounder body for a friendlier look.' },
       { id: 'runner', label: 'Runner', description: 'Lean and slightly more energetic.' },
+      { id: 'bantam', label: 'Bantam', description: 'Small and compact with a feisty attitude.' },
+      { id: 'silkie', label: 'Silkie', description: 'Large, round, and delightfully fluffy.' },
+      { id: 'ornamental', label: 'Ornamental', description: 'Long elegant show-bird silhouette.' },
     ],
   },
   {
@@ -45,6 +48,9 @@ export const roosterPartSections: [
       { id: 'fan', label: 'Fan', description: 'Wider spread for a fuller tail display.' },
       { id: 'sickle', label: 'Sickle', description: 'Longer curved feathers with more strut.' },
       { id: 'fluffy', label: 'Fluffy', description: 'Rounder layered tail for a softer silhouette.' },
+      { id: 'stubby', label: 'Stubby', description: 'Short and tidy with minimal fuss.' },
+      { id: 'majestic', label: 'Majestic', description: 'Tall dramatic plumage fit for a show ring.' },
+      { id: 'peacock', label: 'Peacock', description: 'Wide fan tail with ornamental eye spots.' },
     ],
   },
   {
@@ -151,6 +157,21 @@ export const colorSections: ColorSection[] = [
     ],
   },
   {
+    id: 'tail',
+    title: 'Tail colour',
+    description: 'Accent shade for the tail feathers.',
+    options: [
+      { label: 'Onyx', value: '#2c2c3a' },
+      { label: 'Deep Bronze', value: '#5a3a1a' },
+      { label: 'Mahogany', value: '#7a2c2c' },
+      { label: 'Midnight Blue', value: '#2e3b5e' },
+      { label: 'Bottle Green', value: '#2d4a30' },
+      { label: 'Pewter', value: '#4a4d5c' },
+      { label: 'Auburn', value: '#7a3c1e' },
+      { label: 'Plum', value: '#5c3a5a' },
+    ],
+  },
+  {
     id: 'wings',
     title: 'Wing colour',
     description: 'Secondary feather shade for wing detail.',
@@ -225,6 +246,7 @@ export const defaultRoosterSelection: RoosterSelection = {
   headwear: 'none',
   colors: {
     body: '#d98a2b',
+    tail: '#2c2c3a',
     wings: '#8c4f2b',
     comb: '#cc3a42',
     beak: '#e4a02e',

@@ -1,5 +1,5 @@
-export type BodyVariantId = 'classic' | 'plump' | 'runner';
-export type TailVariantId = 'classic' | 'fan' | 'sickle' | 'fluffy';
+export type BodyVariantId = 'classic' | 'plump' | 'runner' | 'bantam' | 'silkie' | 'ornamental';
+export type TailVariantId = 'classic' | 'fan' | 'sickle' | 'fluffy' | 'stubby' | 'majestic' | 'peacock';
 export type WingVariantId = 'tucked' | 'spread' | 'layered';
 export type FeatherPatternVariantId = 'clean' | 'barred' | 'speckled' | 'tipped';
 export type TattooVariantId = 'none' | 'heart' | 'skull' | 'x-mark' | 'lightning';
@@ -36,6 +36,7 @@ export interface ColorSection {
 
 export interface RoosterColors {
   body: string;
+  tail: string;
   wings: string;
   comb: string;
   beak: string;

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { colorSections, roosterPartSections } from '../data/roosterOptions';
 import type { RoosterSelection } from '../types/avatar';
+import { createRandomSelection } from '../utils/randomSelection';
 import { RoosterAvatar } from './RoosterAvatar';
 
 type StressRooster = {
@@ -22,45 +22,6 @@ const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 const clampCount = (count: number) => Math.min(100, Math.max(1, count));
-
-const bodyOptions = roosterPartSections[0].options.map((option) => option.id);
-const tailOptions = roosterPartSections[1].options.map((option) => option.id);
-const wingOptions = roosterPartSections[2].options.map((option) => option.id);
-const featherPatternOptions = roosterPartSections[3].options.map((option) => option.id);
-const tattooOptions = roosterPartSections[4].options.map((option) => option.id);
-const combShapeOptions = roosterPartSections[5].options.map((option) => option.id);
-const headOptions = roosterPartSections[6].options.map((option) => option.id);
-const eyeOptions = roosterPartSections[7].options.map((option) => option.id);
-const feetOptions = roosterPartSections[8].options.map((option) => option.id);
-const headwearOptions = roosterPartSections[9].options.map((option) => option.id);
-
-const bodyColorOptions = colorSections[0].options.map((option) => option.value);
-const wingColorOptions = colorSections[1].options.map((option) => option.value);
-const combColorOptions = colorSections[2].options.map((option) => option.value);
-const beakColorOptions = colorSections[3].options.map((option) => option.value);
-const headwearColorOptions = colorSections[4].options.map((option) => option.value);
-
-const pick = <T extends string>(options: T[]) => options[randomInt(0, options.length - 1)];
-
-const createRandomSelection = (): RoosterSelection => ({
-  body: pick(bodyOptions),
-  tail: pick(tailOptions),
-  wings: pick(wingOptions),
-  featherPattern: pick(featherPatternOptions),
-  tattoo: pick(tattooOptions),
-  combShape: pick(combShapeOptions),
-  head: pick(headOptions),
-  eyes: pick(eyeOptions),
-  feet: pick(feetOptions),
-  headwear: pick(headwearOptions),
-  colors: {
-    body: pick(bodyColorOptions),
-    wings: pick(wingColorOptions),
-    comb: pick(combColorOptions),
-    beak: pick(beakColorOptions),
-    headwear: pick(headwearColorOptions),
-  },
-});
 
 const createStressFlock = (count: number): StressRooster[] =>
   Array.from({ length: count }, (_, index) => {

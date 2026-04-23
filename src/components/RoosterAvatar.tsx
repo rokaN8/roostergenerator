@@ -31,6 +31,12 @@ const renderBodyClipShape = (variant: RoosterSelection['body']) => {
       return <ellipse cx="154" cy="184" rx="82" ry="70" />;
     case 'runner':
       return <ellipse cx="160" cy="182" rx="76" ry="58" transform="rotate(-8 160 182)" />;
+    case 'bantam':
+      return <ellipse cx="158" cy="188" rx="58" ry="46" transform="rotate(-6 158 188)" />;
+    case 'silkie':
+      return <ellipse cx="154" cy="188" rx="90" ry="74" />;
+    case 'ornamental':
+      return <ellipse cx="162" cy="180" rx="82" ry="50" transform="rotate(-14 162 180)" />;
     case 'classic':
     default:
       return <ellipse cx="156" cy="184" rx="78" ry="64" />;
@@ -131,6 +137,58 @@ const renderBody = (variant: RoosterSelection['body'], fill: string) => {
           />
         </>
       );
+    case 'bantam':
+      return (
+        <>
+          <ellipse
+            cx="158"
+            cy="188"
+            rx="58"
+            ry="46"
+            transform="rotate(-6 158 188)"
+            fill={fill}
+            stroke={outline}
+            strokeWidth="6"
+          />
+          <path
+            d="M108 180c12-18 46-28 80-14"
+            fill="none"
+            stroke="rgba(255,255,255,0.16)"
+            strokeLinecap="round"
+            strokeWidth="10"
+          />
+        </>
+      );
+    case 'silkie':
+      return (
+        <>
+          <ellipse cx="154" cy="188" rx="90" ry="74" fill={fill} stroke={outline} strokeWidth="6" />
+          <ellipse cx="126" cy="182" rx="26" ry="20" fill="rgba(255,255,255,0.14)" />
+          <ellipse cx="154" cy="228" rx="68" ry="20" fill="rgba(255,255,255,0.1)" />
+        </>
+      );
+    case 'ornamental':
+      return (
+        <>
+          <ellipse
+            cx="162"
+            cy="180"
+            rx="82"
+            ry="50"
+            transform="rotate(-14 162 180)"
+            fill={fill}
+            stroke={outline}
+            strokeWidth="6"
+          />
+          <path
+            d="M96 170c22-22 68-30 118-10"
+            fill="none"
+            stroke="rgba(255,255,255,0.16)"
+            strokeLinecap="round"
+            strokeWidth="10"
+          />
+        </>
+      );
     case 'classic':
     default:
       return (
@@ -188,7 +246,7 @@ const renderWing = (variant: RoosterSelection['wings'], fill: string) => {
   }
 };
 
-const renderTail = (variant: RoosterSelection['tail'], accent: string) => {
+const renderTail = (variant: RoosterSelection['tail'], tailColor: string) => {
   switch (variant) {
     case 'fan':
       return (
@@ -196,15 +254,20 @@ const renderTail = (variant: RoosterSelection['tail'], accent: string) => {
           <path
             d="M54 186c-20-43 7-88 46-104 3 30 18 58 49 84-29 15-66 22-95 20z"
             fill={tailBase}
-            opacity="0.95"
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
           />
           <path
             d="M68 174c-7-34 13-69 44-84 7 21 23 40 50 61-23 17-59 28-94 23z"
-            fill={accent}
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
             opacity="0.9"
           />
-          <path d="M74 134c18 10 35 26 47 50" fill="none" stroke="rgba(255,255,255,0.22)" strokeLinecap="round" strokeWidth="9" />
-          <path d="M90 118c18 14 36 37 42 63" fill="none" stroke="rgba(255,255,255,0.16)" strokeLinecap="round" strokeWidth="7" />
+          <path d="M74 134c18 10 35 26 47 50" fill="none" stroke="rgba(255,255,255,0.28)" strokeLinecap="round" strokeWidth="9" />
+          <path d="M90 118c18 14 36 37 42 63" fill="none" stroke="rgba(255,255,255,0.2)" strokeLinecap="round" strokeWidth="7" />
         </>
       );
     case 'sickle':
@@ -213,14 +276,19 @@ const renderTail = (variant: RoosterSelection['tail'], accent: string) => {
           <path
             d="M70 210c-23-30-23-81 3-114 18-22 45-34 67-35-6 31 9 70 39 104-36 15-76 27-109 45z"
             fill={tailBase}
-            opacity="0.96"
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
           />
           <path
             d="M85 196c-17-27-15-66 8-92 15-18 36-27 56-28-2 24 13 52 37 80-28 13-64 24-101 40z"
-            fill={accent}
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
             opacity="0.9"
           />
-          <path d="M104 104c17 20 29 47 32 78" fill="none" stroke="rgba(255,255,255,0.2)" strokeLinecap="round" strokeWidth="8" />
+          <path d="M104 104c17 20 29 47 32 78" fill="none" stroke="rgba(255,255,255,0.25)" strokeLinecap="round" strokeWidth="8" />
         </>
       );
     case 'fluffy':
@@ -229,23 +297,108 @@ const renderTail = (variant: RoosterSelection['tail'], accent: string) => {
           <path
             d="M62 192c-14-26-4-60 21-76 9-19 32-30 53-25 3 17 18 37 43 58-27 19-59 33-91 43-11 0-21 0-26 0z"
             fill={tailBase}
-            opacity="0.95"
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
           />
           <path
             d="M76 182c-7-20 0-44 18-56 11-14 29-21 45-18 6 15 18 30 37 47-20 16-48 28-82 37-10-1-15-4-18-10z"
-            fill={accent}
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
             opacity="0.9"
           />
-          <circle cx="93" cy="139" r="10" fill="rgba(255,255,255,0.12)" />
-          <circle cx="109" cy="121" r="12" fill="rgba(255,255,255,0.1)" />
+          <circle cx="93" cy="139" r="10" fill="rgba(255,255,255,0.18)" />
+          <circle cx="109" cy="121" r="12" fill="rgba(255,255,255,0.14)" />
+        </>
+      );
+    case 'stubby':
+      return (
+        <>
+          <path
+            d="M76 186c-8-16 2-36 22-44 0 14 6 28 20 42-16 4-32 4-42 2z"
+            fill={tailBase}
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M84 179c-2-12 8-28 20-34 4 10 10 20 22 30-14 4-28 5-42 4z"
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+        </>
+      );
+    case 'majestic':
+      return (
+        <>
+          <path
+            d="M42 196c-12-50 18-100 62-118 8 36 28 70 62 102-42 22-88 26-124 16z"
+            fill={tailBase}
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M56 183c-6-38 18-76 54-90 10 26 26 54 56 80-34 18-74 22-110 10z"
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+          <path d="M82 102c20 24 36 54 40 88" fill="none" stroke="rgba(255,255,255,0.26)" strokeLinecap="round" strokeWidth="9" />
+          <path d="M104 94c18 28 30 60 30 92" fill="none" stroke="rgba(255,255,255,0.18)" strokeLinecap="round" strokeWidth="7" />
+          <path d="M68 120c22 22 38 54 44 86" fill="none" stroke="rgba(255,255,255,0.18)" strokeLinecap="round" strokeWidth="7" />
+        </>
+      );
+    case 'peacock':
+      return (
+        <>
+          <path
+            d="M46 202c-10-46 18-96 60-114 6-10 18-14 30-10 2 34 22 70 58 102-42 24-104 28-148 22z"
+            fill={tailBase}
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M62 188c-4-34 16-72 48-86 8-6 18-10 26-6 4 26 22 54 52 78-36 18-90 22-126 14z"
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+          <circle cx="112" cy="114" r="12" fill="rgba(255,255,255,0.2)" />
+          <circle cx="112" cy="114" r="6" fill="rgba(255,255,255,0.16)" />
+          <circle cx="86" cy="132" r="10" fill="rgba(255,255,255,0.16)" />
+          <circle cx="134" cy="106" r="9" fill="rgba(255,255,255,0.14)" />
         </>
       );
     case 'classic':
     default:
       return (
         <>
-          <path d="M66 175c-14-36 8-76 44-88 1 28 10 53 38 74-30 11-58 13-82 14z" fill={tailBase} opacity="0.95" />
-          <path d="M76 165c-2-28 17-61 48-72 5 21 18 36 42 53-24 16-55 21-90 19z" fill={accent} opacity="0.9" />
+          <path
+            d="M66 175c-14-36 8-76 44-88 1 28 10 53 38 74-30 11-58 13-82 14z"
+            fill={tailBase}
+            stroke={outline}
+            strokeWidth="5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M76 165c-2-28 17-61 48-72 5 21 18 36 42 53-24 16-55 21-90 19z"
+            fill={tailColor}
+            stroke={outline}
+            strokeWidth="3"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
         </>
       );
   }
@@ -428,11 +581,10 @@ const renderEyeAccessory = (
   switch (variant) {
     case 'round-glasses':
       return (
-        <g fill="none" stroke={outline} strokeLinecap="round" strokeLinejoin="round">
-          <circle cx={eyeX} cy={eyeY} r="10.5" strokeWidth="4" />
-          <circle cx={eyeX - 18} cy={eyeY - 1} r="7.5" stroke="rgba(79,57,34,0.6)" strokeWidth="3.5" />
-          <path d={`M${eyeX - 10} ${eyeY - 2}h9`} strokeWidth="3.5" />
-          <path d={`M${eyeX + 8} ${eyeY - 1}l11 1`} strokeWidth="3.5" />
+        <g fill="none" stroke={outline} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx={eyeX} cy={eyeY} r="10" />
+          {/* temple arm */}
+          <path d={`M${eyeX + 10} ${eyeY - 2}l12 2`} />
         </g>
       );
     case 'sunglasses':
@@ -608,7 +760,7 @@ export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: Ro
         <g className="rooster-travel">
           <g className="rooster-direction">
             <g className="rooster-bob">
-              <g className="rooster-tail">{renderTail(selection.tail, selection.colors.wings)}</g>
+              <g className="rooster-tail">{renderTail(selection.tail, selection.colors.tail)}</g>
               {renderFeet(selection.feet, selection.colors.beak)}
               {renderBody(selection.body, selection.colors.body)}
               {renderFeatherPattern(selection.featherPattern, bodyClipId, selection.colors.wings)}

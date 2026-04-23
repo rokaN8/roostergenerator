@@ -30,6 +30,7 @@ interface ControlPanelProps {
   onFeetChange: (value: FeetVariantId) => void;
   onHeadwearChange: (value: HeadwearVariantId) => void;
   onBodyColorChange: (value: string) => void;
+  onTailColorChange: (value: string) => void;
   onWingColorChange: (value: string) => void;
   onCombColorChange: (value: string) => void;
   onBeakColorChange: (value: string) => void;
@@ -51,6 +52,7 @@ export function ControlPanel({
   onFeetChange,
   onHeadwearChange,
   onBodyColorChange,
+  onTailColorChange,
   onWingColorChange,
   onCombColorChange,
   onBeakColorChange,
@@ -95,6 +97,9 @@ export function ControlPanel({
     switch (sectionId) {
       case 'body':
         onBodyColorChange(value);
+        return;
+      case 'tail':
+        onTailColorChange(value);
         return;
       case 'wings':
         onWingColorChange(value);
