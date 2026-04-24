@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { memo, useId } from 'react';
 import type { RoosterSelection } from '../types/avatar';
 
 interface RoosterAvatarProps {
@@ -716,7 +716,7 @@ const renderFeet = (variant: RoosterSelection['feet'], fill: string) => {
   }
 };
 
-export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: RoosterAvatarProps) {
+export const RoosterAvatar = memo(function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: RoosterAvatarProps) {
   const svgId = useId().replace(/:/g, '');
   const bodyClipId = `${svgId}-body-clip`;
   const skyGradientId = `${svgId}-sky-gradient`;
@@ -733,14 +733,18 @@ export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: Ro
       height="100%"
     >
       <defs>
-        <linearGradient id={skyGradientId} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#cfeeff" />
-          <stop offset="100%" stopColor="#fff7dc" />
-        </linearGradient>
-        <linearGradient id={groundGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#7eb36f" />
-          <stop offset="100%" stopColor="#5b924b" />
-        </linearGradient>
+        {showBackdrop && (
+          <>
+            <linearGradient id={skyGradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#cfeeff" />
+              <stop offset="100%" stopColor="#fff7dc" />
+            </linearGradient>
+            <linearGradient id={groundGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#7eb36f" />
+              <stop offset="100%" stopColor="#5b924b" />
+            </linearGradient>
+          </>
+        )}
         <clipPath id={bodyClipId}>{renderBodyClipShape(selection.body)}</clipPath>
       </defs>
 
@@ -778,4 +782,4 @@ export function RoosterAvatar({ selection, isAnimated, showBackdrop = true }: Ro
       </g>
     </svg>
   );
-}
+});

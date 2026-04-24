@@ -24,6 +24,19 @@ import type {
 import { createRandomSelection } from './utils/randomSelection';
 
 const selectionStorageKey = 'rooster-generator.selection';
+const themeStorageKey = 'rooster-generator.theme';
+
+type Theme = 'light' | 'dark';
+
+const loadStoredTheme = (): Theme => {
+  try {
+    const stored = window.localStorage.getItem(themeStorageKey);
+    if (stored === 'dark' || stored === 'light') return stored;
+  } catch {
+    // ignore
+  }
+  return 'light';
+};
 
 const partOptionsById = Object.fromEntries(
   roosterPartSections.map((section) => [section.id, section.options.map((option) => option.id)]),
@@ -127,6 +140,18 @@ function App() {
   const [selection, setSelection] = useState<RoosterSelection>(loadStoredSelection);
   const [isAnimationEnabled, setIsAnimationEnabled] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('builder');
+  const [theme, setTheme] = useState<Theme>(loadStoredTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      window.localStorage.setItem(themeStorageKey, theme);
+    } catch {
+      // ignore
+    }
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'));
 
   useEffect(() => {
     try {
@@ -241,20 +266,31 @@ function App() {
               ? 'One live preview, ten customizable parts, tattoos included, and colour palettes that keep the demo playful.'
               : 'One stress scene, randomized roosters, and an FPS counter for quick render pressure checks.'}
           </p>
-          <div className="view-switch" role="tablist" aria-label="View mode">
+          <div className="hero-card-footer">
+            <div className="view-switch" role="tablist" aria-label="View mode">
+              <button
+                className={`view-switch__button${viewMode === 'builder' ? ' view-switch__button--active' : ''}`}
+                type="button"
+                onClick={() => setViewMode('builder')}
+              >
+                Builder
+              </button>
+              <button
+                className={`view-switch__button${viewMode === 'stress' ? ' view-switch__button--active' : ''}`}
+                type="button"
+                onClick={() => setViewMode('stress')}
+              >
+                Stress test
+              </button>
+            </div>
             <button
-              className={`view-switch__button${viewMode === 'builder' ? ' view-switch__button--active' : ''}`}
+              className="theme-toggle"
               type="button"
-              onClick={() => setViewMode('builder')}
+              onClick={toggleTheme}
+              aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
+              title={theme === 'light' ? 'Dark theme' : 'Light theme'}
             >
-              Builder
-            </button>
-            <button
-              className={`view-switch__button${viewMode === 'stress' ? ' view-switch__button--active' : ''}`}
-              type="button"
-              onClick={() => setViewMode('stress')}
-            >
-              Stress test
+              {theme === 'light' ? '🌙' : '☀️'}
             </button>
           </div>
         </div>

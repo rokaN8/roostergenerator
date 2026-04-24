@@ -14,7 +14,7 @@
 }
 
 .field-label {
-  color: #453420;
+  color: var(--label-color);
   font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -25,9 +25,9 @@
 .select-with-swatch {
   width: 100%;
   border-radius: 16px;
-  border: 1px solid rgba(130, 95, 46, 0.15);
-  background: #ffffff;
-  color: #453420;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--input-color);
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
 }
 
@@ -56,13 +56,13 @@
 .select-with-swatch:hover,
 .select-with-swatch:focus-within {
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(140, 98, 42, 0.08);
-  border-color: rgba(154, 98, 22, 0.35);
+  box-shadow: 0 10px 18px var(--input-hover-shadow);
+  border-color: var(--input-hover-border);
 }
 
 .dropdown-field select:focus-visible,
 .select-with-swatch:focus-within {
-  outline: 3px solid rgba(221, 176, 92, 0.55);
+  outline: 3px solid var(--input-focus-outline);
   outline-offset: 2px;
 }
 
@@ -70,6 +70,6 @@
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 999px;
-  border: 2px solid rgba(59, 39, 15, 0.14);
+  border: 2px solid var(--swatch-border);
   flex-shrink: 0;
 }

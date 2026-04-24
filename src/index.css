@@ -10,6 +10,104 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Theme tokens — light defaults */
+  --page-color: #2f2417;
+  --heading-color: #3e2e19;
+  --body-color: #5d503f;
+  --muted-color: #6b5d49;
+  --label-color: #453420;
+  --accent-color: #6a4b1f;
+  --card-body-color: #4e4434;
+
+  --surface-bg: rgba(255, 252, 247, 0.82);
+  --surface-border: rgba(126, 89, 37, 0.12);
+  --surface-shadow: rgba(120, 84, 37, 0.08);
+
+  --eyebrow-bg: rgba(255, 241, 204, 0.65);
+
+  --switch-bg: rgba(246, 231, 192, 0.75);
+  --switch-border: rgba(126, 89, 37, 0.14);
+  --switch-active-bg: #ffffff;
+  --switch-active-color: #3e2e19;
+  --switch-active-shadow: rgba(130, 95, 46, 0.1);
+
+  --pill-bg: #f5e4b7;
+  --pill-color: #6c4c1e;
+
+  --input-bg: #ffffff;
+  --input-color: #453420;
+  --input-border: rgba(130, 95, 46, 0.15);
+  --input-hover-border: rgba(154, 98, 22, 0.35);
+  --input-hover-shadow: rgba(140, 98, 42, 0.08);
+  --input-focus-outline: rgba(221, 176, 92, 0.55);
+  --swatch-border: rgba(59, 39, 15, 0.14);
+
+  --btn-bg: #ffffff;
+  --btn-color: #4b351a;
+  --btn-border: rgba(130, 95, 46, 0.15);
+  --btn-hover-shadow: rgba(140, 98, 42, 0.08);
+  --btn-hover-border: rgba(154, 98, 22, 0.35);
+  --btn-secondary-bg: #fff7e9;
+
+  --toggle-bg: rgba(255, 248, 239, 0.95);
+  --toggle-color: #5d4522;
+  --toggle-border: rgba(130, 95, 46, 0.15);
+
+  --summary-bg: #fff8ef;
+  --summary-border: rgba(135, 97, 41, 0.1);
+}
+
+[data-theme="dark"] {
+  color: #d4b88a;
+  background:
+    radial-gradient(circle at top, rgba(60, 38, 10, 0.95), rgba(40, 26, 8, 0.85) 38%, transparent 58%),
+    linear-gradient(180deg, #1e1408 0%, #2a1c0a 55%, #23160a 100%);
+
+  --page-color: #d4b88a;
+  --heading-color: #f0ddb8;
+  --body-color: #b89870;
+  --muted-color: #8a7050;
+  --label-color: #c4a878;
+  --accent-color: #c89848;
+  --card-body-color: #c4a060;
+
+  --surface-bg: rgba(28, 18, 6, 0.90);
+  --surface-border: rgba(180, 130, 60, 0.18);
+  --surface-shadow: rgba(0, 0, 0, 0.40);
+
+  --eyebrow-bg: rgba(60, 40, 10, 0.75);
+
+  --switch-bg: rgba(45, 30, 10, 0.90);
+  --switch-border: rgba(180, 130, 60, 0.22);
+  --switch-active-bg: rgba(70, 50, 18, 1);
+  --switch-active-color: #f0ddb8;
+  --switch-active-shadow: rgba(0, 0, 0, 0.35);
+
+  --pill-bg: #3d2a0e;
+  --pill-color: #d4a050;
+
+  --input-bg: #1c1206;
+  --input-color: #d4b88a;
+  --input-border: rgba(180, 130, 60, 0.22);
+  --input-hover-border: rgba(200, 150, 70, 0.45);
+  --input-hover-shadow: rgba(0, 0, 0, 0.3);
+  --input-focus-outline: rgba(200, 152, 72, 0.45);
+  --swatch-border: rgba(220, 170, 80, 0.2);
+
+  --btn-bg: #241808;
+  --btn-color: #d4a050;
+  --btn-border: rgba(180, 130, 60, 0.22);
+  --btn-hover-shadow: rgba(0, 0, 0, 0.3);
+  --btn-hover-border: rgba(200, 150, 70, 0.45);
+  --btn-secondary-bg: #1c1408;
+
+  --toggle-bg: rgba(25, 16, 4, 0.95);
+  --toggle-color: #c8a050;
+  --toggle-border: rgba(180, 130, 60, 0.22);
+
+  --summary-bg: #180f04;
+  --summary-border: rgba(180, 130, 60, 0.14);
 }
 
 * {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { RoosterSelection } from '../types/avatar';
 import { createRandomSelection } from '../utils/randomSelection';
@@ -13,6 +13,7 @@ type StressRooster = {
   depth: number;
   opacity: number;
   blur: number;
+  zIndex: number;
   cycleDuration: number;
   travelDuration: number;
   animationDelay: number;
@@ -26,9 +27,10 @@ const clampCount = (count: number) => Math.min(100, Math.max(1, count));
 const createStressFlock = (count: number): StressRooster[] =>
   Array.from({ length: count }, (_, index) => {
     const depth = Math.random();
+    const zIndex = Math.round(depth * 1000);
 
     return {
-      id: `stress-rooster-${index}-${Math.round(depth * 1000)}`,
+      id: `stress-rooster-${index}-${zIndex}`,
       selection: createRandomSelection(),
       left: 6 + Math.random() * 88,
       bottom: 28 + (1 - depth) * 250 + Math.random() * 26,
@@ -36,6 +38,7 @@ const createStressFlock = (count: number): StressRooster[] =>
       depth,
       opacity: 0.58 + depth * 0.42,
       blur: Number(((1 - depth) * 0.9).toFixed(2)),
+      zIndex,
       cycleDuration: Number((0.88 + Math.random() * 0.5).toFixed(2)),
       travelDuration: Number((6.6 + Math.random() * 3.1).toFixed(2)),
       animationDelay: Number((Math.random() * -8).toFixed(2)),
@@ -46,7 +49,7 @@ export function RoosterStressTest() {
   const [roosterCount, setRoosterCount] = useState(() => randomInt(1, 100));
   const [seed, setSeed] = useState(() => Date.now());
   const [isAnimationEnabled, setIsAnimationEnabled] = useState(true);
-  const [fps, setFps] = useState(0);
+  const fpsRef = useRef<HTMLSpanElement>(null);
 
   const flock = useMemo(() => createStressFlock(roosterCount), [roosterCount, seed]);
 
@@ -60,7 +63,10 @@ export function RoosterStressTest() {
       const elapsed = currentTime - previousTime;
 
       if (elapsed >= 500) {
-        setFps(Math.round((frameCount * 1000) / elapsed));
+        const currentFps = Math.round((frameCount * 1000) / elapsed);
+        if (fpsRef.current) {
+          fpsRef.current.textContent = `${currentFps} FPS`;
+        }
         frameCount = 0;
         previousTime = currentTime;
       }
@@ -109,7 +115,7 @@ export function RoosterStressTest() {
             />
             <span>Animate flock</span>
           </label>
-          <span className="panel-pill">{fps} FPS</span>
+          <span ref={fpsRef} className="panel-pill">0 FPS</span>
         </div>
       </div>
 
@@ -158,9 +164,9 @@ export function RoosterStressTest() {
                 left: `${rooster.left}%`,
                 bottom: `${rooster.bottom}px`,
                 width: `${rooster.width}px`,
-                zIndex: Math.round(rooster.depth * 1000),
+                zIndex: rooster.zIndex,
                 opacity: rooster.opacity,
-                filter: `blur(${rooster.blur}px)`,
+                filter: isAnimationEnabled ? undefined : `blur(${rooster.blur}px)`,
                 '--rooster-cycle-duration': `${rooster.cycleDuration}s`,
                 '--rooster-travel-duration': `${rooster.travelDuration}s`,
                 '--rooster-animation-delay': `${rooster.animationDelay}s`,
