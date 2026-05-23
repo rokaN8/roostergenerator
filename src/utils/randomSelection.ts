@@ -1,16 +1,15 @@
+import { henColorSections, henPartSections } from '../data/henOptions';
+import { pigColorSections, pigPartSections } from '../data/pigOptions';
 import { colorSections, roosterPartSections } from '../data/roosterOptions';
 import type {
-  BodyVariantId,
-  CombShapeVariantId,
-  EyeAccessoryVariantId,
-  FeatherPatternVariantId,
-  FeetVariantId,
-  HeadVariantId,
-  HeadwearVariantId,
+  AnimalColorKey,
+  AnimalPartKey,
+  AnimalPartSection,
+  AnimalSelection,
+  ColorSection,
+  HenSelection,
+  PigSelection,
   RoosterSelection,
-  TailVariantId,
-  TattooVariantId,
-  WingVariantId,
 } from '../types/avatar';
 
 const randomInt = (min: number, max: number) =>
@@ -18,29 +17,42 @@ const randomInt = (min: number, max: number) =>
 
 const pick = <T>(options: T[]): T => options[randomInt(0, options.length - 1)];
 
-const partIds = (sectionId: (typeof roosterPartSections)[number]['id']): string[] =>
-  roosterPartSections.find((s) => s.id === sectionId)?.options.map((o) => o.id) ?? [];
+const partIds = (partSections: AnimalPartSection[], sectionId: AnimalPartKey): string[] =>
+  partSections.find((s) => s.id === sectionId)?.options.map((o) => o.id) ?? [];
 
-const colorValues = (sectionId: (typeof colorSections)[number]['id']): string[] =>
-  colorSections.find((s) => s.id === sectionId)?.options.map((o) => o.value) ?? [];
+const colorValues = (sections: ColorSection[], sectionId: AnimalColorKey): string[] =>
+  sections.find((s) => s.id === sectionId)?.options.map((o) => o.value) ?? [];
 
-export const createRandomSelection = (): RoosterSelection => ({
-  body: pick(partIds('body')) as BodyVariantId,
-  tail: pick(partIds('tail')) as TailVariantId,
-  wings: pick(partIds('wings')) as WingVariantId,
-  featherPattern: pick(partIds('featherPattern')) as FeatherPatternVariantId,
-  tattoo: pick(partIds('tattoo')) as TattooVariantId,
-  combShape: pick(partIds('combShape')) as CombShapeVariantId,
-  head: pick(partIds('head')) as HeadVariantId,
-  eyes: pick(partIds('eyes')) as EyeAccessoryVariantId,
-  feet: pick(partIds('feet')) as FeetVariantId,
-  headwear: pick(partIds('headwear')) as HeadwearVariantId,
-  colors: {
-    body: pick(colorValues('body')),
-    tail: pick(colorValues('tail')),
-    wings: pick(colorValues('wings')),
-    comb: pick(colorValues('comb')),
-    beak: pick(colorValues('beak')),
-    headwear: pick(colorValues('headwear')),
-  },
-});
+const createRandomAnimalSelection = <T extends AnimalSelection>(
+  partSections: AnimalPartSection[],
+  colorSections: ColorSection[],
+) =>
+  ({
+    body: pick(partIds(partSections, 'body')),
+    tail: pick(partIds(partSections, 'tail')),
+    wings: pick(partIds(partSections, 'wings')),
+    featherPattern: pick(partIds(partSections, 'featherPattern')),
+    tattoo: pick(partIds(partSections, 'tattoo')),
+    combShape: pick(partIds(partSections, 'combShape')),
+    head: pick(partIds(partSections, 'head')),
+    eyes: pick(partIds(partSections, 'eyes')),
+    feet: pick(partIds(partSections, 'feet')),
+    headwear: pick(partIds(partSections, 'headwear')),
+    colors: {
+      body: pick(colorValues(colorSections, 'body')),
+      tail: pick(colorValues(colorSections, 'tail')),
+      wings: pick(colorValues(colorSections, 'wings')),
+      comb: pick(colorValues(colorSections, 'comb')),
+      beak: pick(colorValues(colorSections, 'beak')),
+      headwear: pick(colorValues(colorSections, 'headwear')),
+    },
+  }) as T;
+
+export const createRandomSelection = (): RoosterSelection =>
+  createRandomAnimalSelection<RoosterSelection>(roosterPartSections, colorSections);
+
+export const createRandomHenSelection = (): HenSelection =>
+  createRandomAnimalSelection<HenSelection>(henPartSections, henColorSections);
+
+export const createRandomPigSelection = (): PigSelection =>
+  createRandomAnimalSelection<PigSelection>(pigPartSections, pigColorSections);

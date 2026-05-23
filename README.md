@@ -1,17 +1,18 @@
 # Rooster Generator
 
-Small React + Vite character builder for making a customizable rooster.
+Small React + Vite character builder for making a customizable rooster, hen, or pig.
 
 ## Features
 
-- Live rooster preview
+- Live rooster, hen, or pig preview
+- Animal switcher for rooster, hen, and pig in builder mode
 - Part customization: body type (standard/bantam/silkie/ornamental), tail shape (standard/stubby/majestic/peacock), wings, feather pattern, comb shape, head, eyes, feet, and headwear
 - Color customization for body, tail, wings, comb, beak/feet, and headwear
 - Eye accessories: round glasses (single profile lens) and sunglasses
 - "Surprise me!" randomiser button
 - Optional preview animation toggle
-- Saved customization with `localStorage`
-- Stress test view — randomise a whole flock to check rendering performance
+- Saved customization with `localStorage` for each animal
+- Stress test view — randomise a mixed flock of roosters, hens, and pigs to check rendering performance
 - GitHub Pages deployment workflow
 
 ## Local development
@@ -42,13 +43,17 @@ npm run preview
 
 ## Project structure
 
-- `src/App.tsx` — app state, persistence, preview controls, "Surprise me!" randomiser
+- `src/App.tsx` — app state, animal switching, persistence, preview controls, "Surprise me!" randomiser
 - `src/components/ControlPanel.tsx` — dropdown and colour picker UI
 - `src/components/RoosterAvatar.tsx` — rooster SVG rendering and animation
+- `src/components/HenAvatar.tsx` — hen SVG rendering and animation
+- `src/components/PigAvatar.tsx` — pig SVG rendering and animation
 - `src/components/RoosterStressTest.tsx` — flock stress test view
 - `src/data/roosterOptions.ts` — customization options and defaults
-- `src/types/avatar.ts` — selection and option types
-- `src/utils/randomSelection.ts` — shared random selection utility (keyed lookup)
+- `src/data/henOptions.ts` — hen customization options and defaults
+- `src/data/pigOptions.ts` — pig customization options and defaults
+- `src/types/avatar.ts` — rooster, hen, pig, and shared option types
+- `src/utils/randomSelection.ts` — shared random selection utilities (keyed lookup)
 
 ## GitHub Pages
 

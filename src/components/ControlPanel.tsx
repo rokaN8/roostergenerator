@@ -1,34 +1,34 @@
 import type {
-  BodyVariantId,
+  AnimalBodyVariantId,
+  AnimalCombShapeVariantId,
+  AnimalEyeAccessoryVariantId,
+  AnimalFeatherPatternVariantId,
+  AnimalFeetVariantId,
+  AnimalHeadVariantId,
+  AnimalHeadwearVariantId,
+  AnimalPartSection,
+  AnimalSelection,
+  AnimalTailVariantId,
+  AnimalTattooVariantId,
+  AnimalWingVariantId,
   ColorSection,
-  CombShapeVariantId,
-  EyeAccessoryVariantId,
-  FeatherPatternVariantId,
-  FeetVariantId,
-  HeadVariantId,
-  HeadwearVariantId,
-  RoosterPartSection,
-  RoosterSelection,
-  TattooVariantId,
-  TailVariantId,
-  WingVariantId,
 } from '../types/avatar';
 import './ControlPanel.css';
 
 interface ControlPanelProps {
-  partSections: RoosterPartSection[];
+  partSections: AnimalPartSection[];
   colorSections: ColorSection[];
-  selection: RoosterSelection;
-  onBodyChange: (value: BodyVariantId) => void;
-  onTailChange: (value: TailVariantId) => void;
-  onWingChange: (value: WingVariantId) => void;
-  onFeatherPatternChange: (value: FeatherPatternVariantId) => void;
-  onTattooChange: (value: TattooVariantId) => void;
-  onCombShapeChange: (value: CombShapeVariantId) => void;
-  onHeadChange: (value: HeadVariantId) => void;
-  onEyesChange: (value: EyeAccessoryVariantId) => void;
-  onFeetChange: (value: FeetVariantId) => void;
-  onHeadwearChange: (value: HeadwearVariantId) => void;
+  selection: AnimalSelection;
+  onBodyChange: (value: AnimalBodyVariantId) => void;
+  onTailChange: (value: AnimalTailVariantId) => void;
+  onWingChange: (value: AnimalWingVariantId) => void;
+  onFeatherPatternChange: (value: AnimalFeatherPatternVariantId) => void;
+  onTattooChange: (value: AnimalTattooVariantId) => void;
+  onCombShapeChange: (value: AnimalCombShapeVariantId) => void;
+  onHeadChange: (value: AnimalHeadVariantId) => void;
+  onEyesChange: (value: AnimalEyeAccessoryVariantId) => void;
+  onFeetChange: (value: AnimalFeetVariantId) => void;
+  onHeadwearChange: (value: AnimalHeadwearVariantId) => void;
   onBodyColorChange: (value: string) => void;
   onTailColorChange: (value: string) => void;
   onWingColorChange: (value: string) => void;
@@ -58,37 +58,37 @@ export function ControlPanel({
   onBeakColorChange,
   onHeadwearColorChange,
 }: ControlPanelProps) {
-  const handlePartChange = (section: RoosterPartSection, optionId: string) => {
+  const handlePartChange = (section: AnimalPartSection, optionId: string) => {
     switch (section.id) {
       case 'body':
-        onBodyChange(optionId as BodyVariantId);
+        onBodyChange(optionId as AnimalBodyVariantId);
         return;
       case 'tail':
-        onTailChange(optionId as TailVariantId);
+        onTailChange(optionId as AnimalTailVariantId);
         return;
       case 'wings':
-        onWingChange(optionId as WingVariantId);
+        onWingChange(optionId as AnimalWingVariantId);
         return;
       case 'featherPattern':
-        onFeatherPatternChange(optionId as FeatherPatternVariantId);
+        onFeatherPatternChange(optionId as AnimalFeatherPatternVariantId);
         return;
       case 'tattoo':
-        onTattooChange(optionId as TattooVariantId);
+        onTattooChange(optionId as AnimalTattooVariantId);
         return;
       case 'combShape':
-        onCombShapeChange(optionId as CombShapeVariantId);
+        onCombShapeChange(optionId as AnimalCombShapeVariantId);
         return;
       case 'head':
-        onHeadChange(optionId as HeadVariantId);
+        onHeadChange(optionId as AnimalHeadVariantId);
         return;
       case 'eyes':
-        onEyesChange(optionId as EyeAccessoryVariantId);
+        onEyesChange(optionId as AnimalEyeAccessoryVariantId);
         return;
       case 'feet':
-        onFeetChange(optionId as FeetVariantId);
+        onFeetChange(optionId as AnimalFeetVariantId);
         return;
       case 'headwear':
-        onHeadwearChange(optionId as HeadwearVariantId);
+        onHeadwearChange(optionId as AnimalHeadwearVariantId);
         return;
     }
   };
@@ -116,7 +116,7 @@ export function ControlPanel({
     }
   };
 
-  const selectedPartValue = (section: RoosterPartSection) => {
+  const selectedPartValue = (section: AnimalPartSection) => {
     switch (section.id) {
       case 'body':
         return selection.body;

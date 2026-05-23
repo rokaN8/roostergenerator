@@ -1,12 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
-import type { RoosterSelection } from '../types/avatar';
-import { createRandomSelection } from '../utils/randomSelection';
+import type { AnimalKind, HenSelection, PigSelection, RoosterSelection } from '../types/avatar';
+import {
+  createRandomHenSelection,
+  createRandomPigSelection,
+  createRandomSelection,
+} from '../utils/randomSelection';
+import { HenAvatar } from './HenAvatar';
+import { PigAvatar } from './PigAvatar';
 import { RoosterAvatar } from './RoosterAvatar';
 
-type StressRooster = {
+type StressAnimalBase = {
   id: string;
-  selection: RoosterSelection;
   left: number;
   bottom: number;
   width: number;
@@ -19,31 +24,73 @@ type StressRooster = {
   animationDelay: number;
 };
 
+type StressAnimal =
+  | (StressAnimalBase & { animal: 'rooster'; selection: RoosterSelection })
+  | (StressAnimalBase & { animal: 'hen'; selection: HenSelection })
+  | (StressAnimalBase & { animal: 'pig'; selection: PigSelection });
+
 const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 const clampCount = (count: number) => Math.min(100, Math.max(1, count));
 
-const createStressFlock = (count: number): StressRooster[] =>
+const randomAnimalKind = (): AnimalKind => {
+  const roll = randomInt(0, 2);
+
+  if (roll === 0) return 'rooster';
+  if (roll === 1) return 'hen';
+  return 'pig';
+};
+
+const createStressAnimal = (
+  animal: AnimalKind,
+  index: number,
+  zIndex: number,
+  depth: number,
+): StressAnimal => {
+  const base = {
+    id: `stress-${animal}-${index}-${zIndex}`,
+    left: 6 + Math.random() * 88,
+    bottom: 28 + (1 - depth) * 250 + Math.random() * 26,
+    width: 70 + depth * 170,
+    depth,
+    opacity: 0.58 + depth * 0.42,
+    blur: Number(((1 - depth) * 0.9).toFixed(2)),
+    zIndex,
+    cycleDuration: Number((0.88 + Math.random() * 0.5).toFixed(2)),
+    travelDuration: Number((6.6 + Math.random() * 3.1).toFixed(2)),
+    animationDelay: Number((Math.random() * -8).toFixed(2)),
+  } satisfies StressAnimalBase;
+
+  switch (animal) {
+    case 'rooster':
+      return { ...base, animal, selection: createRandomSelection() };
+    case 'hen':
+      return { ...base, animal, selection: createRandomHenSelection() };
+    case 'pig':
+      return { ...base, animal, selection: createRandomPigSelection() };
+  }
+};
+
+const createStressFlock = (count: number): StressAnimal[] =>
   Array.from({ length: count }, (_, index) => {
     const depth = Math.random();
     const zIndex = Math.round(depth * 1000);
+    const animal = randomAnimalKind();
 
-    return {
-      id: `stress-rooster-${index}-${zIndex}`,
-      selection: createRandomSelection(),
-      left: 6 + Math.random() * 88,
-      bottom: 28 + (1 - depth) * 250 + Math.random() * 26,
-      width: 70 + depth * 170,
-      depth,
-      opacity: 0.58 + depth * 0.42,
-      blur: Number(((1 - depth) * 0.9).toFixed(2)),
-      zIndex,
-      cycleDuration: Number((0.88 + Math.random() * 0.5).toFixed(2)),
-      travelDuration: Number((6.6 + Math.random() * 3.1).toFixed(2)),
-      animationDelay: Number((Math.random() * -8).toFixed(2)),
-    };
+    return createStressAnimal(animal, index, zIndex, depth);
   }).sort((first, second) => first.depth - second.depth);
+
+const renderStressAvatar = (animal: StressAnimal, isAnimated: boolean) => {
+  switch (animal.animal) {
+    case 'rooster':
+      return <RoosterAvatar isAnimated={isAnimated} selection={animal.selection} showBackdrop={false} />;
+    case 'hen':
+      return <HenAvatar isAnimated={isAnimated} selection={animal.selection} showBackdrop={false} />;
+    case 'pig':
+      return <PigAvatar isAnimated={isAnimated} selection={animal.selection} showBackdrop={false} />;
+  }
+};
 
 export function RoosterStressTest() {
   const [roosterCount, setRoosterCount] = useState(() => randomInt(1, 100));
@@ -103,8 +150,8 @@ export function RoosterStressTest() {
     <section className="stress-panel">
       <div className="panel-header">
         <div>
-          <h2>Rooster stress test</h2>
-          <p>Spawn a farm full of randomized roosters to see how many animated avatars your screen can hold.</p>
+          <h2>Farm avatar stress test</h2>
+          <p>Spawn a randomized mix of roosters, hens, and pigs to see how many animated avatars your screen can hold.</p>
         </div>
         <div className="preview-tools">
           <label className="motion-toggle">
@@ -121,7 +168,7 @@ export function RoosterStressTest() {
 
       <div className="stress-toolbar">
         <label className="stress-count-control">
-          <span>Roosters</span>
+          <span>Animals</span>
           <input
             type="number"
             min={1}
@@ -155,25 +202,25 @@ export function RoosterStressTest() {
         <div className="stress-ground stress-ground--back" aria-hidden="true" />
         <div className="stress-ground stress-ground--front" aria-hidden="true" />
 
-        {flock.map((rooster) => (
+        {flock.map((animal) => (
           <div
             className="stress-rooster"
-            key={rooster.id}
+            key={animal.id}
             style={
               {
-                left: `${rooster.left}%`,
-                bottom: `${rooster.bottom}px`,
-                width: `${rooster.width}px`,
-                zIndex: rooster.zIndex,
-                opacity: rooster.opacity,
-                filter: isAnimationEnabled ? undefined : `blur(${rooster.blur}px)`,
-                '--rooster-cycle-duration': `${rooster.cycleDuration}s`,
-                '--rooster-travel-duration': `${rooster.travelDuration}s`,
-                '--rooster-animation-delay': `${rooster.animationDelay}s`,
+                left: `${animal.left}%`,
+                bottom: `${animal.bottom}px`,
+                width: `${animal.width}px`,
+                zIndex: animal.zIndex,
+                opacity: animal.opacity,
+                filter: isAnimationEnabled ? undefined : `blur(${animal.blur}px)`,
+                '--rooster-cycle-duration': `${animal.cycleDuration}s`,
+                '--rooster-travel-duration': `${animal.travelDuration}s`,
+                '--rooster-animation-delay': `${animal.animationDelay}s`,
               } as CSSProperties
             }
           >
-            <RoosterAvatar isAnimated={isAnimationEnabled} selection={rooster.selection} showBackdrop={false} />
+            {renderStressAvatar(animal, isAnimationEnabled)}
           </div>
         ))}
       </div>
